@@ -1,0 +1,18 @@
+﻿@page "/Estudiante";
+@using SistemaDeNotas.Data
+@using Data.Model;
+@using Data.Services;
+
+@inject IEstudianteService EstudianteService; 
+@inject NavigationManager NavigationManager;
+
+
+<h3>Estudiantes</h3>
+
+@code {
+    IEnumerable<Estudiante> estudiantes;
+    protected override async Task OnInitializedAsync()
+    {
+    //estudiantes = await EstudianteService.GetAllEstudiantes();
+    }
+}

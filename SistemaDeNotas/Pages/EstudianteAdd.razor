@@ -1,0 +1,47 @@
+﻿@page "/EstudianteAdd"
+@using SistemaDeNotas.Data.Model
+@using SistemaDeNotas.Data.Services
+@inject IEstudianteService EstudianteService
+@inject NavigationManager NavigationManager
+
+<h1>Adicionar Film</h1>
+
+<EditForm Model="@estudiante" OnValidSubmit="@EstudianteAdd">
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td><input type="text" @bind="estudiante.id" required /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="estudiante.Nombres" required /></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text" @bind="estudiante.Apellido" /></td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td><input type="text" @bind="Estudiante.Direccion" /></td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Telefono:</td>
+            <td><input type="text" @bind="Estudiante.Telefono" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+
+        @code {
+
+            Estudiante estudiante = new Estudiante();
+
+            protected async Task EstudianteInsert() {
+                await EstudianteService.EstudianteInsert(estudiante);
+                NavigationManager.NavigateTo("/");
+            }
+        }
