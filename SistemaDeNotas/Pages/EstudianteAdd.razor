@@ -1,12 +1,14 @@
 ﻿@page "/EstudianteAdd"
+
 @using SistemaDeNotas.Data.Model
 @using SistemaDeNotas.Data.Services
+
 @inject IEstudianteService EstudianteService
 @inject NavigationManager NavigationManager
 
 <h1>Adicionar Film</h1>
 
-<EditForm Model="@estudiante" OnValidSubmit="@EstudianteAdd">
+<EditForm Model="@estudiante" OnValidSubmit="@EstudianteInsert">
     <table>
         <tr>
             <td>Id:</td>
@@ -18,16 +20,20 @@
         </tr>
         <tr>
             <td>Apellido:</td>
-            <td><input type="text" @bind="estudiante.Apellido" /></td>
+            <td><input type="text" @bind="estudiante.Apellidos" /></td>
         </tr>
         <tr>
             <td>Direccion:</td>
-            <td><input type="text" @bind="Estudiante.Direccion" /></td>
+            <td><input type="text" @bind="estudiante.Direccion" /></td>
         </tr>
-        <tr>
+
         <tr>
             <td>Telefono:</td>
-            <td><input type="text" @bind="Estudiante.Telefono" /></td>
+            <td><input type="text" @bind="estudiante.Telefono" /></td>
+        </tr>
+        <tr>
+            <td>Correo:</td>
+            <td><input type="text" @bind="estudiante.Correo" /></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -35,7 +41,8 @@
                 <input type="button" value="Cancelar" @onclick="@Cancel" />
             </td>
         </tr>
-
+    </table>
+</EditForm>
         @code {
 
             Estudiante estudiante = new Estudiante();
@@ -43,5 +50,10 @@
             protected async Task EstudianteInsert() {
                 await EstudianteService.EstudianteInsert(estudiante);
                 NavigationManager.NavigateTo("/");
+            }
+
+            protected void Cancel()
+            {
+                
             }
         }

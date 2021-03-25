@@ -1,5 +1,4 @@
 ﻿using SistemaDeNotas.Data.Model;
-using SistemaDeNotas.Data.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,8 +6,16 @@ namespace SistemaDeNotas.Data.Services
 {
     public interface IEstudianteService
     {
-        Task<bool> EstudianteInsert(estudiante estudiante);
+        // Insertar Estudiante
+        Task<bool> EstudianteInsert(Estudiante estudiante);
+        //Obtener todos los estudiantes
+        Task<IEnumerable<Estudiante>> GetAllEstudiantes();
+        //obtener un estudiante por ID
+        Task<IEnumerable<Estudiante>> GetEstudianteDetail(int id);
 
-        Task<IEnumerable<estudiante>> GetAllEstudiante();
+        //actualizar estudiante
+        Task<bool> EstudianteUpdate(Estudiante estudiante);
+        // Eliminar estudiante
+        Task<bool> EstudianteDelete(int id);
     }
 }

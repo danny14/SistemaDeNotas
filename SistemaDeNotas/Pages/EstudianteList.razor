@@ -1,0 +1,68 @@
+﻿@page "/EstudianteList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IEstudianteService EstudianteService; 
+@inject NavigationManager NavigationManager;
+
+
+<h1>Lista de Estudiantes</h1>
+<a class="btn btn-success" href="EstudianteAdd">Nuevo Estudiante</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (estudiantes != null)
+        {
+            @foreach (var estudiante in estudiantes)
+            {
+                <tr>
+                    <td>@estudiante.id</td>
+                    <td>@estudiante.Nombres</td>
+                    <td>@estudiante.Apellidos</td>
+                    <td>@estudiante.Direccion</td>
+                    <td>@estudiante.Telefono</td>
+                    <td>@estudiante.Correo</td>
+                    <td>
+                        <a href="EstudianteEdit/@estudiante.id" class="btn btn-default " aria-label="left align">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </a>
+                        <button type="button" class="btn btn-default" aria-label="left align" title="delete">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        }
+
+    </tbody>
+</table>
+
+@code {
+
+
+    IEnumerable<Estudiante> estudiantes;
+    protected override async Task OnInitializedAsync()
+    {
+        estudiantes = await EstudianteService.GetAllEstudiantes();
+    }
+     
+    /**
+    void EditarRegistro(int id)
+    {
+        NavigationManager.NavigateTo(/);
+    }
+    **/
+}

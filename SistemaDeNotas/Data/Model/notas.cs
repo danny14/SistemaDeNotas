@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaDeNotas.Data.Model
 {
-    public class notas
+    public class Notas
     {
         public int id { get; set; }
 

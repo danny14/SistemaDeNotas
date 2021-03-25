@@ -1,0 +1,67 @@
+﻿@page "/EstudianteEdit/{id:int}"
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IEstudianteService EstudianteService
+@inject NavigationManager NavigationManager
+
+<h3>Editar Estudiante</h3>
+<EditForm Model="@estudiante" OnValidSubmit="@EstudianteUpdate">
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td><input type="hidden"  @bind-value="estudiante.id" required /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind-value="estudiante.Nombres" required /></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text" @bind-value="estudiante.Apellidos" /></td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td><input type="text" @bind-value="estudiante.Direccion" /></td>
+        </tr>
+
+        <tr>
+            <td>Telefono:</td>
+            <td><input type="text" @bind-value="estudiante.Telefono" /></td>
+        </tr>
+        <tr>
+            <td>Correo:</td>
+            <td><input type="text" @bind-value="estudiante.Correo" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public int id { set; get; }
+
+    Estudiante estudiante = new Estudiante();
+
+    protected override async Task OnInitializedAsync()
+    {
+        IEnumerable<Estudiante> estudiante;
+        estudiante = await EstudianteService.GetEstudianteDetail(id);
+    }
+
+    protected async Task EstudianteUpdate()
+    {
+
+    }
+
+    protected void Cancel() { 
+    }
+
+}

@@ -18,8 +18,10 @@ namespace SistemaDeNotas.Data.Services
         {
             _configuration = configuration;
         }
-
-        public async Task<bool> EstudianteInsert(estudiante estudiante)
+        /*
+         * Insertar un Estudiante
+         */
+        public async Task<bool> EstudianteInsert(Estudiante estudiante)
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
@@ -40,22 +42,50 @@ namespace SistemaDeNotas.Data.Services
 
             return true;
         }
-
-        public Task<IEnumerable<estudiante>> GetAllEstudiante()
+        /**
+         * Obtener todos los estudiantes 
+        **/
+        public async Task<IEnumerable<Estudiante>> GetAllEstudiantes()
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<estudiante>> GetAllEstudiantes()
-        {
-            IEnumerable<estudiante> estudiantes;
+            IEnumerable<Estudiante> estudiantes;
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 const string query = "SELECT * FROM estudiante";
-                estudiantes = await conn.QueryAsync<estudiante>(query, commandType: CommandType.Text);
+                estudiantes = await conn.QueryAsync<Estudiante>(query, commandType: CommandType.Text);
             }
 
             return estudiantes;
+        }
+        /**
+         * Eliminar un Estudiante
+         */
+        public Task<bool> EstudianteDelete(int id)
+        {
+            throw new NotImplementedException();
+        }
+        /**
+         * Obtener un estudiante por ID 
+        **/
+        public async Task<IEnumerable<Estudiante>> GetEstudianteDetail(int id)
+        {
+            IEnumerable<Estudiante> estudiante;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("id", id, DbType.Int32);
+                const string query = "SELECT * FROM estudiante WHERE id = @Id";
+                estudiante = await conn.QueryAsync<Estudiante>(query, new { Id = id });
+            }
+
+            return estudiante;
+        }
+
+        /*
+         * Metodo para actualizar un estudiante 
+         */
+        public Task<bool> EstudianteUpdate(Estudiante estudiante)
+        {
+            throw new NotImplementedException();
         }
     }
 }

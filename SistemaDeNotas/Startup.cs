@@ -33,7 +33,8 @@ namespace SistemaDeNotas
 
             //Se registra la Entidad y Servicios
             services.AddScoped<IEstudianteService, EstudianteService>();
-            
+            services.AddScoped<IMateriaService, MateriaService>();
+
 
             //Conexion a la BD
             var SqlConnectionConfiguration = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContext"));

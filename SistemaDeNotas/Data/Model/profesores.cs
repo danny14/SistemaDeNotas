@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaDeNotas.Data.Model
 {
-    public class profesores
+    public class Profesores
     {
         public int id { get; set; }
 

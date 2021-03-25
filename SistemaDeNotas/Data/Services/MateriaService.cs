@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace SistemaDeNotas.Data.Services
 {
-    public class MateriaService
+    public class MateriaService : IMateriaService
     {
         private readonly SqlConnectionConfiguration _configuration;
 
@@ -19,7 +19,7 @@ namespace SistemaDeNotas.Data.Services
             _configuration = configuration;
         }
 
-        public async Task<bool> MateriaInsert(materia materia)
+        public async Task<bool> MateriaInsert(Materia materia)
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
@@ -37,16 +37,39 @@ namespace SistemaDeNotas.Data.Services
             return true;
         }
 
-        public async Task<IEnumerable<materia>> GetAllMateria()
+        public async Task<IEnumerable<Materia>> GetAllMateria()
         {
-            IEnumerable<materia> materias;
+            IEnumerable<Materia> materias;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "";
-                materias = await conn.QueryAsync<materia>(query, commandType: CommandType.Text);
+                const string query = "SELECT * FROM materia";
+                materias = await conn.QueryAsync<Materia>(query, commandType: CommandType.Text);
             }
 
             return materias;
+        }
+        /**
+         * Eliminar una Materia
+         */
+        public Task<bool> DeleteMateria(int id)
+        {
+
+            throw new NotImplementedException();
+        }
+        /**
+         * Obtener un materia por ID 
+        **/
+        public Task<bool> GetMateriaDetail(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*
+         * Metodo para actualizar un estudiante 
+         */
+        public Task<bool> UpdateMateria(Materia materia)
+        {
+            throw new NotImplementedException();
         }
     }
 }
