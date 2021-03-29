@@ -106,12 +106,12 @@ namespace SistemaDeNotas.Data.Services
                 parameters.Add("correoEstudiante", estudiante.Correo, DbType.String);
                 parameters.Add("idProgramaEstudiante", estudiante.id_programa, DbType.Int32);
 
-                const string query = @"UPDATE Tienda SET nombresEstudiantes = @nombresEstudiante,
-                                    apellidosEstudiante = @apellidosEstudiante,
-                                    direccionEstudiante = @direccionEstudiante,
-                                    telefonoEstudiante = @telefonoEstudiante,
-                                    correoEstudiante = @correoEstudiante
-                                    WHERE idEstudiante = @idEstudiante";
+                const string query = @"UPDATE Tienda SET Nombres = @nombresEstudiante,
+                                    Apellidos = @apellidosEstudiante,
+                                    Direccion = @direccionEstudiante,
+                                    Telefono = @telefonoEstudiante,
+                                    Correo = @correoEstudiante
+                                    WHERE id = @idEstudiante";
 
                     await conn.ExecuteAsync(query, new { estudiante.id, estudiante.Nombres, estudiante.Apellidos, estudiante.Direccion, estudiante.Telefono, estudiante.Correo, estudiante.id_programa }, commandType: CommandType.Text);
             }

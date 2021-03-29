@@ -7,8 +7,8 @@ namespace SistemaDeNotas.Data.Model
 {
     public class Estudiante
     {
-        public int id { get; set; }
-        public string Nombres { get; set; }
+        public int idEstudiante { get; set; }
+        public string NombresEstudiante { get; set; }
 
         public string Apellidos { get; set; }
         public string Direccion { get; set; }

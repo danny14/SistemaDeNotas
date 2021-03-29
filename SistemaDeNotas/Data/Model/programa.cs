@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace SistemaDeNotas.Data.Model
 {
-    public class Programa
+    public class Grado
     {
-        public int id { get; set; }
+        public int idGrado { get; set; }
 
-        public string nombre { get; set; }
-        public string facultad { get; set; }
+        public int idMateria { get; set; }
+        public string idEstudiante { get; set; }
     }
 }

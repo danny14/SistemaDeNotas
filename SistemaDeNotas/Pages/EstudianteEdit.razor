@@ -14,32 +14,32 @@
 <EditForm Model="@estudiante" OnValidSubmit="@EstudianteUpdate">
     <table>
         <tr>
-            <td><input type="hidden"  @bind-value="estudiante.id" required disabled /></td>
+            <td><input type="hidden"  @bind="estudiante.id" required disabled /></td>
         </tr>
         <tr>
             <td>Nombre:</td>
-            <td><input type="text" @bind-value="estudiante.Nombres"  /></td>
+            <td><input type="text" @bind="estudiante.Nombres"  /></td>
         </tr>
         <tr>
             <td>Apellido:</td>
-            <td><input type="text" @bind-value="estudiante.Apellidos" /></td>
-        </tr>
-        <tr>
-            <td>Direccion:</td>
-            <td><input type="text" @bind-value="estudiante.Direccion" /></td>
+            <td><input type="text" @bind="estudiante.Apellidos" /></td>
+        </tr>                          
+        <tr>                           
+            <td>Direccion:</td>        
+            <td><input type="text" @bind="estudiante.Direccion" /></td>
         </tr>
 
         <tr>
             <td>Telefono:</td>
-            <td><input type="text" @bind-value="estudiante.Telefono" /></td>
+            <td><input type="text" @bind="estudiante.Telefono" /></td>
         </tr>
         <tr>
             <td>Correo:</td>
-            <td><input type="text" @bind-value="estudiante.Correo" /></td>
+            <td><input type="text" @bind="estudiante.Correo" /></td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Adicionar" @onclick="" />
+                <input type="submit" value="Adicionar" @onclick="@EstudianteUpdate" />
                 <input type="button" value="Cancelar" @onclick="@Cancel" />
             </td>
         </tr>
