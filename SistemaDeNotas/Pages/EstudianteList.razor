@@ -34,10 +34,10 @@
                     <td>@estudiante.Telefono</td>
                     <td>@estudiante.Correo</td>
                     <td>
-                        <a href="EstudianteEdit/@estudiante.id" class="btn btn-default " aria-label="left align">
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarEstudiante(estudiante.id)">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
-                        </a>
-                        <button type="button" class="btn btn-default" aria-label="left align" title="delete">
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteEstudiante(estudiante.id)">
                             <span class="oi oi-trash" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -58,11 +58,18 @@
     {
         estudiantes = await EstudianteService.GetAllEstudiantes();
     }
-     
-    /**
-    void EditarRegistro(int id)
+
+
+    void EditarEstudiante(int id)
     {
-        NavigationManager.NavigateTo(/);
+        NavigationManager.NavigateTo("/EstudianteEdit/" + id);
     }
-    **/
+
+    protected async Task DeleteEstudiante(int id) {
+
+        await EstudianteService.EstudianteDelete(id);
+        NavigationManager.NavigateTo("/");
+
+    }
+
 }
