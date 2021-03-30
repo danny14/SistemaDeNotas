@@ -13,63 +13,98 @@ namespace SistemaDeNotas.Data.Services
     public class MateriaService : IMateriaService
     {
         private readonly SqlConnectionConfiguration _configuration;
-
         public MateriaService(SqlConnectionConfiguration configuration)
         {
             _configuration = configuration;
         }
-
+        /*
+         * Insertar un Estudiante
+         */
         public async Task<bool> MateriaInsert(Materia materia)
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("idMateria", materia.id, DbType.Int32);
-                parameters.Add("nombreMateria", materia.nombre, DbType.String);
-                parameters.Add("cupoMateria", materia.cupo, DbType.Int32);
-                parameters.Add("idProfesorMateria", materia.id_profesor, DbType.Int32);
+                parameters.Add("NombreMateria", materia.nombreMateria, DbType.String);
+                parameters.Add("idProfesor", materia.idProfesor, DbType.Int32);
 
-                const string query = @"INSERT INTO materia (id, nombre, cupo, id_profesor) 
-                VALUES (@idMateria, @nombreMateria, @cupoMateria,@idProfesorMateria)";
 
-                await conn.ExecuteAsync(query, new { materia.id, materia.nombre, materia.cupo, materia.id_profesor }, commandType: CommandType.Text);
+                const string query = @"INSERT INTO materia ( NombreMateria, idProfesor ) 
+                VALUES ( @NombreMateria, @idProfesor )";
+
+                await conn.ExecuteAsync(query, new { materia.nombreMateria, materia.idProfesor }, commandType: CommandType.Text);
             }
+
             return true;
         }
 
-        public async Task<IEnumerable<Materia>> GetAllMateria()
+
+        /**
+         * Obtener todos los estudiantes 
+        **/
+        public async Task<IEnumerable<Materia>> GetAllMaterias()
         {
-            IEnumerable<Materia> materias;
+            IEnumerable<Materia> materia;
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 const string query = "SELECT * FROM materia";
-                materias = await conn.QueryAsync<Materia>(query, commandType: CommandType.Text);
+                materia = await conn.QueryAsync<Materia>(query, commandType: CommandType.Text);
             }
 
-            return materias;
+            return materia;
         }
+
+
         /**
          * Eliminar una Materia
          */
-        public Task<bool> DeleteMateria(int id)
+        public async Task<bool> MateriaDelete(int idMateria)
         {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                var query = @"DELETE FROM materia
+                            WHERE idMateria = @idMateria";
+                await conn.ExecuteAsync(query.ToString(), new { idMateria = idMateria }, commandType: CommandType.Text);
+            }
 
-            throw new NotImplementedException();
+            return true;
         }
+
+
         /**
-         * Obtener un materia por ID 
+         * Obtener un Materia por ID 
         **/
-        public Task<bool> GetMateriaDetail(int id)
+        public async Task<Estudiante> GetMateriaDetail(int id)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+
+                const string query = "SELECT * FROM materia WHERE idMateria = @Id";
+                return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
+            }
         }
 
         /*
-         * Metodo para actualizar un estudiante 
+         * Metodo para actualizar una Materia 
          */
-        public Task<bool> UpdateMateria(Materia materia)
+        public async Task<bool> MateriaUpdate(Materia materia)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+
+                var parameters = new DynamicParameters();
+
+                parameters.Add("nombreMateria", materia.nombreMateria, DbType.String);
+                parameters.Add("idProfer", materia.idProfesor, DbType.Int32);
+
+                const string query = @"UPDATE materia SET nombreMateria = @nombreMateria,
+                                    idProfesor = @idProfesor
+                                    WHERE idMateria = @idMateria";
+
+                await conn.ExecuteAsync(query, new { materia.nombreMateria, materia.idProfesor }, commandType: CommandType.Text);
+            }
+
+            return true;
         }
     }
 }

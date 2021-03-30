@@ -7,16 +7,16 @@ namespace SistemaDeNotas.Data.Model
 {
     public class Profesores
     {
-        public int id { get; set; }
+        public int idProfesor { get; set; }
 
-        public string nombre { get; set; }
+        public string nombreProfesor { get; set; }
 
-        public string apellido { get; set; }
+        public string apellidoProfesor { get; set; }
 
-        public string direccion { get; set; }
+        public string direccionProfesor { get; set; }
 
-        public string telefono { get; set; }
+        public string telefonoProfesor { get; set; }
 
-        public string correo { get; set; }
+        public string correoProfesor { get; set; }
     }
 }

@@ -6,10 +6,10 @@ namespace SistemaDeNotas.Data.Services
 {
     public interface IMateriaService
     {
-        Task<bool> DeleteMateria(int id);
-        Task<IEnumerable<Materia>> GetAllMateria();
-        Task<bool> GetMateriaDetail(int id);
+        Task<IEnumerable<Materia>> GetAllMaterias();
+        Task<Estudiante> GetMateriaDetail(int id);
+        Task<bool> MateriaDelete(int idMateria);
         Task<bool> MateriaInsert(Materia materia);
-        Task<bool> UpdateMateria(Materia materia);
+        Task<bool> MateriaUpdate(Materia materia);
     }
 }

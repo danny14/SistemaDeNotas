@@ -7,11 +7,9 @@ namespace SistemaDeNotas.Data.Model
 {
     public class Materia
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
+        public int idMateria { get; set; }
+        public string nombreMateria { get; set; }
 
-        public int cupo { get; set; }
-
-        public int id_profesor { get; set; }
+        public int idProfesor { get; set; }
     }
 }
