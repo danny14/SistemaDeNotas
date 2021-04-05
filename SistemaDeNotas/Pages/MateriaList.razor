@@ -1,5 +1,70 @@
-﻿<h3>MateriaList</h3>
+﻿@page "/MateriaList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IMateriaService MateriaService;
+@inject NavigationManager NavigationManager;
+
+
+<h1>Lista de Materias</h1>
+<a class="btn btn-success" href="MateriaAdd">Nuevo Materia</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Profesor</th>
+
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (materias != null)
+        {
+            @foreach (var materia in materias)
+            {
+                <tr>
+                    <td>@materia.idMateria</td>
+                    <td>@materia.idProfesor</td>
+                    <td>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarMateria(materia.idMateria)">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteMateria(materia.idMateria)">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        }
+
+    </tbody>
+</table>
 
 @code {
 
+
+    IEnumerable<Materia> materias;
+    protected override async Task OnInitializedAsync()
+    {
+        materias = await MateriaService.GetAllMaterias();
+    }
+
+
+    void EditarMateria(int id)
+    {
+        NavigationManager.NavigateTo("/MateriaEdit/" + id);
+    }
+
+    protected async Task DeleteMateria(int id)
+    {
+
+        await MateriaService.MateriaDelete(id);
+        NavigationManager.NavigateTo("/");
+
+    }
+
 }
+

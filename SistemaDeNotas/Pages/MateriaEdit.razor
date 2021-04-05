@@ -1,5 +1,61 @@
-﻿<h3>MateriaEdit</h3>
+﻿@page "/MateriaEdit/{idMateria:int}"
+
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IMateriaService MateriaService
+@inject NavigationManager NavigationManager
+
+@using Microsoft.AspNetCore.Http
+
+<h3>Editar Materia </h3>
+
+<EditForm Model="@materia" OnValidSubmit="@MateriaUpdate">
+    <table>
+        <tr>
+            <td><input type="hidden" @bind="materia.idMateria" required disabled /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="materia.idProfesor" /></td>
+        </tr>
+        
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" @onclick="@MateriaUpdate" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
 
 @code {
+
+    [Parameter]
+    public int idMateria { set; get; }
+
+    Materia materia = new Materia();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idMateria > 0)
+        {
+            materia = await MateriaService.GetMateriaDetail(idMateria);
+        }
+
+    }
+
+    protected async Task MateriaUpdate()
+    {
+        await MateriaService.MateriaUpdate(materia);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+    }
 
 }

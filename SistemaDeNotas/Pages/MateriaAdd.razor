@@ -1,5 +1,45 @@
-﻿<h3>MateriaAdd</h3>
+﻿@page "/MateriaAdd"
 
+@using SistemaDeNotas.Data.Model
+@using SistemaDeNotas.Data.Services
+
+@inject IMateriaService MateriaService
+@inject NavigationManager NavigationManager
+
+<h1>Adicionar Film</h1>
+
+<EditForm Model="@materia" OnValidSubmit="@MateriaInsert">
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td><input type="text" @bind="materia.idMateria" required /></td>
+        </tr>
+        <tr>
+            <td>Profesor:</td>
+            <td><input type="text" @bind="materia.idProfesor" required /></td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
 @code {
 
+    Materia materia = new Materia();
+
+    protected async Task MateriaInsert()
+    {
+        await MateriaService.MateriaInsert(materia);
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+
+    }
 }
+
