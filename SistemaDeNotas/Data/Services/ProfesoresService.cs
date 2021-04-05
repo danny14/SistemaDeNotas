@@ -9,7 +9,7 @@ using SistemaDeNotas.Data.Model;
 using System.Data.SqlClient;
 using SistemaDeNotas.Data;
 
-namespace SistemaDeProfesor.Data.Services
+namespace SistemaDeNotas.Data.Services
 {
     public class ProfesoresService : IProfesoresService
     {

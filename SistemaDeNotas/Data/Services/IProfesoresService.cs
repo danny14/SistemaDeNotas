@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SistemaDeProfesor.Data.Services
+namespace SistemaDeNotas.Data.Services
 {
     public interface IProfesoresService
     {

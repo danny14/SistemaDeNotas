@@ -1,5 +1,61 @@
-﻿<h3>GradoEdit</h3>
+﻿@page "/GradoEdit/{idGrado:int}"
+
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IGradoService GradoService
+@inject NavigationManager NavigationManager
+
+@using Microsoft.AspNetCore.Http
+
+<h3>Editar Estudiante </h3>
+
+<EditForm Model="@grado" OnValidSubmit="@GradoUpdate">
+    <table>
+        <tr>
+            <td><input type="hidden" @bind="grado.idEstudiante" required disabled /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="grado.idMateria" /></td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" @onclick="@GradoUpdate" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
 
 @code {
+
+    [Parameter]
+    public int idGrado { set; get; }
+
+    Grado grado = new Grado();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idGrado > 0)
+        {
+            grado = await GradoService.GetGradoDetail(idGrado);
+        }
+
+    }
+
+    protected async Task GradoUpdate()
+    {
+        await EstudianteService.EstudianteUpdate(grado);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+    }
 
 }

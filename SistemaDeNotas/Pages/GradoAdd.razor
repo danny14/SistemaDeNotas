@@ -1,5 +1,44 @@
-﻿<h3>GradoAdd</h3>
+﻿@page "/GradoAdd"
 
+@using SistemaDeNotas.Data.Model
+@using SistemaDeNotas.Data.Services
+
+@inject IGradoService GradoService 
+@inject NavigationManager NavigationManager
+
+<h1>Adicionar Film</h1>
+
+<EditForm Model="@grado" OnValidSubmit="@GradoInsert">
+    <table>
+
+        <tr>
+            <td>Estudiante:</td>
+            <td><input type="text" @bind="grado.idEstudiante" required /></td>
+        </tr>
+        <tr>
+            <td>Materia:</td>
+            <td><input type="text" @bind="grado.idMateria" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
 @code {
 
+    Grado grado = new Grado();
+
+    protected async Task GradoInsert()
+    {
+        await GradoService.GradoInsert(grado);
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+
+    }
 }

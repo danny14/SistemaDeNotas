@@ -1,5 +1,74 @@
-﻿<h3>GradoList</h3>
+﻿@page "/GradoList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IGradoService GradoService;
+@inject NavigationManager NavigationManager;
+
+
+<h1>Lista de Grados</h1>
+<a class="btn btn-success" href="GradoAdd">Nuevo Grado</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (grados != null)
+        {
+            @foreach (var grado in grados)
+            {
+                <tr>
+                    <td>@grado.idGrado</td>
+                    <td>@grado.idEstudiante</td>
+                    <td>@grado.idMateria</td>
+
+                    <td>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarGrado(grado.idGrado)">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteGrado(grado.idGrado)">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        }
+
+    </tbody>
+</table>
 
 @code {
+
+
+    IEnumerable<Grado> grados;
+    protected override async Task OnInitializedAsync()
+    {
+        grados = await GradoService.GetAllGrados();
+    }
+
+
+    void EditarGrado(int id)
+    {
+        NavigationManager.NavigateTo("/GradoEdit/" + id);
+    }
+
+    protected async Task DeleteGrado(int id)
+    {
+
+        await GradoService.GradoDelete(id);
+        NavigationManager.NavigateTo("/");
+
+    }
 
 }
