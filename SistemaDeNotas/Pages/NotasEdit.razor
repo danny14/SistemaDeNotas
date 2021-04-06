@@ -1,5 +1,81 @@
-﻿<h3>NotasEdit</h3>
+﻿@page "/NotasEdit/{idNotas:int}"
+
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject INotasService NotasService
+@inject NavigationManager NavigationManager
+
+@using Microsoft.AspNetCore.Http
+
+<h3>Editar Notas </h3>
+
+<EditForm Model="@nota" OnValidSubmit="@NotasUpdate">
+    <table>
+        <tr>
+            <td><input type="hidden" @bind="nota.idNotas" required disabled /></td>
+        </tr>
+        <tr>
+            <td>Nota 1:</td>
+            <td><input type="text" @bind="nota.nota1" /></td>
+        </tr>
+        <tr>
+            <td>Nota 2:</td>
+            <td><input type="text" @bind="nota.nota2" /></td>
+        </tr>
+        <tr>
+            <td>Nota 3:</td>
+            <td><input type="text" @bind="nota.nota3" /></td>
+        </tr>
+
+        <tr>
+            <td>Promedio de Notas:</td>
+            <td><input type="text" @bind="nota.promedioNotas" /></td>
+        </tr>
+        <tr>
+            <td>Estudiante:</td>
+            <td><input type="text" @bind="nota.idEstudiante" /></td>
+        </tr>
+        <tr>
+            <td>Materia:</td>
+            <td><input type="text" @bind="nota.idMateria" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" @onclick="@NotasUpdate" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
 
 @code {
+
+    [Parameter]
+    public int idNotas { set; get; }
+
+    Notas nota = new Notas();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idNotas > 0)
+        {
+            nota = await NotasService.GetNotasDetail(idNotas);
+        }
+
+    }
+
+    protected async Task NotasUpdate()
+    {
+        await NotasService.NotasUpdate(nota);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+    }
 
 }
