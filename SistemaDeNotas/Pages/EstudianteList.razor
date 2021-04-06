@@ -27,17 +27,17 @@
             @foreach (var estudiante in estudiantes)
             {
                 <tr>
-                    <td>@estudiante.id</td>
-                    <td>@estudiante.Nombres</td>
-                    <td>@estudiante.Apellidos</td>
-                    <td>@estudiante.Direccion</td>
-                    <td>@estudiante.Telefono</td>
-                    <td>@estudiante.Correo</td>
+                    <td>@estudiante.idEstudiante</td>
+                    <td>@estudiante.NombresEstudiante</td>
+                    <td>@estudiante.ApellidosEstudiante</td>
+                    <td>@estudiante.DireccionEstudiante</td>
+                    <td>@estudiante.TelefonoEstudiante</td>
+                    <td>@estudiante.CorreoEstudiante</td>
                     <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarEstudiante(estudiante.id)">
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarEstudiante(estudiante.idEstudiante)">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteEstudiante(estudiante.id)">
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteEstudiante(estudiante.idEstudiante)">
                             <span class="oi oi-trash" aria-hidden="true"></span>
                         </button>
                     </td>
