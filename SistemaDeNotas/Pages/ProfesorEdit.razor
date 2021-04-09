@@ -18,24 +18,24 @@
         </tr>
         <tr>
             <td>Nombre:</td>
-            <td><input type="text" @bind="profesor.NombresProfesor" /></td>
+            <td><input type="text" @bind="profesor.nombreProfesor" /></td>
         </tr>
         <tr>
             <td>Apellido:</td>
-            <td><input type="text" @bind="profesor.ApellidosProfesores" /></td>
+            <td><input type="text" @bind="profesor.apellidoProfesor" /></td>
         </tr>
         <tr>
             <td>Direccion:</td>
-            <td><input type="text" @bind="profesor.DireccionProfesores" /></td>
+            <td><input type="text" @bind="profesor.direccionProfesor" /></td>
         </tr>
 
         <tr>
             <td>Telefono:</td>
-            <td><input type="text" @bind="profesor.TelefonoProfesores" /></td>
+            <td><input type="text" @bind="profesor.telefonoProfesor" /></td>
         </tr>
         <tr>
             <td>Correo:</td>
-            <td><input type="text" @bind="profesor.CorreoProfesores" /></td>
+            <td><input type="text" @bind="profesor.correoProfesor" /></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -50,15 +50,15 @@
 @code {
 
     [Parameter]
-    public int idProfesores { set; get; }
+    public int idProfesor { set; get; }
 
     Profesores profesor = new Profesores();
 
     protected override async Task OnInitializedAsync()
     {
-        if (idProfesores > 0)
+        if (idProfesor > 0)
         {
-            profesor = await ProfesoresService.GetProfesorDetail(idProfesores);
+            profesor = await ProfesoresService.GetProfesorDetail(idProfesor);
         }
 
     }
