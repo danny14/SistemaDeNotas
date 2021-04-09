@@ -49,7 +49,7 @@
 
     protected async Task GradoUpdate()
     {
-        await EstudianteService.EstudianteUpdate(grado);
+        await GradoService.GradoUpdate(grado);
 
         NavigationManager.NavigateTo("/");
     }

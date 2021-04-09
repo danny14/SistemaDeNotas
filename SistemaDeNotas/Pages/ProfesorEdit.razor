@@ -1,5 +1,77 @@
-﻿<h3>ProfesorEdit</h3>
+﻿@page "/ProfesoresEdit/{idProfesores:int}"
+
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IProfesoresService ProfesoresService
+@inject NavigationManager NavigationManager
+
+@using Microsoft.AspNetCore.Http
+
+<h3>Editar Profesores </h3>
+
+<EditForm Model="@profesor" OnValidSubmit="@ProfesoresUpdate">
+    <table>
+        <tr>
+            <td><input type="hidden" @bind="profesor.idProfesor" required disabled /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="profesor.NombresProfesor" /></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text" @bind="profesor.ApellidosProfesores" /></td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td><input type="text" @bind="profesor.DireccionProfesores" /></td>
+        </tr>
+
+        <tr>
+            <td>Telefono:</td>
+            <td><input type="text" @bind="profesor.TelefonoProfesores" /></td>
+        </tr>
+        <tr>
+            <td>Correo:</td>
+            <td><input type="text" @bind="profesor.CorreoProfesores" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" @onclick="@ProfesoresUpdate" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
 
 @code {
+
+    [Parameter]
+    public int idProfesores { set; get; }
+
+    Profesores profesor = new Profesores();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idProfesores > 0)
+        {
+            profesor = await ProfesoresService.GetProfesorDetail(idProfesores);
+        }
+
+    }
+
+    protected async Task ProfesoresUpdate()
+    {
+        await ProfesoresService.ProfesorUpdate(profesor);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+    }
 
 }

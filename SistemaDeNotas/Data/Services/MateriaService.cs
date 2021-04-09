@@ -106,5 +106,10 @@ namespace SistemaDeNotas.Data.Services
 
             return true;
         }
+
+        Task<Materia> IMateriaService.GetMateriaDetail(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

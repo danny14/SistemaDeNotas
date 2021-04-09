@@ -1,5 +1,76 @@
-﻿<h3>ProfesorList</h3>
+﻿@page "/ProfesoresList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IProfesoresService ProfesoresService;
+@inject NavigationManager NavigationManager;
+
+
+<h1>Lista de Profesoress</h1>
+<a class="btn btn-success" href="ProfesoresAdd">Nuevo Profesores</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (profesores != null)
+        {
+            @foreach (var profesor in profesores)
+            {
+                <tr>
+                    <td>@profesor.idProfesor</td>
+                    <td>@profesor.nombreProfesor</td>
+                    <td>@profesor.apellidoProfesor</td>
+                    <td>@profesor.direccionProfesor</td>
+                    <td>@profesor.telefonoProfesor</td>
+                    <td>@profesor.correoProfesor</td>
+                    <td>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarProfesores(profesor.idProfesor)">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteProfesores(profesor.idProfesor)">
+                            <span class="oi oi-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        }
+
+    </tbody>
+</table>
 
 @code {
+
+
+    IEnumerable<Profesores> profesores;
+    protected override async Task OnInitializedAsync()
+    {
+        profesores = await ProfesoresService.GetAllProfesor();
+    }
+
+
+    void EditarProfesores(int id)
+    {
+        NavigationManager.NavigateTo("/ProfesoresEdit/" + id);
+    }
+
+    protected async Task DeleteProfesores(int id)
+    {
+
+        await ProfesoresService.ProfesorDelete(id);
+        NavigationManager.NavigateTo("/");
+
+    }
 
 }

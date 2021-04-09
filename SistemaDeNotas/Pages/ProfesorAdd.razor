@@ -1,5 +1,61 @@
-﻿<h3>ProfesorAdd</h3>
+﻿@page "/ProfesorAdd"
 
+@using SistemaDeNotas.Data.Model
+@using SistemaDeNotas.Data.Services
+
+@inject IProfesoresService ProfesoresService
+@inject NavigationManager NavigationManager
+
+<h1>Adicionar Film</h1>
+
+<EditForm Model="@profesor" OnValidSubmit="@ProfesorInsert">
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td><input type="text" @bind="profesor.idProfesor" required /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="profesor.NombresProfesor" required /></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text" @bind="profesor.ApellidosProfesor" /></td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td><input type="text" @bind="profesor.DireccionProfesor" /></td>
+        </tr>
+
+        <tr>
+            <td>Telefono:</td>
+            <td><input type="text" @bind="profesor.TelefonoProfesor" /></td>
+        </tr>
+        <tr>
+            <td>Correo:</td>
+            <td><input type="text" @bind="profesor.CorreoProfesor" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
 @code {
 
+    Profesores profesor = new Profesores();
+
+    protected async Task ProfesorInsert()
+    {
+        await ProfesoresService.ProfesorInsert(profesor);
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected void Cancel()
+    {
+
+    }
 }
+
