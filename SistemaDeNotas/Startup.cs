@@ -42,7 +42,11 @@ namespace SistemaDeNotas
 
             //Conexion a la BD
             var SqlConnectionConfiguration = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContext"));
+            var SqlConnectionConfigurationCloud = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContextCloud"));
             services.AddSingleton(SqlConnectionConfiguration);
+            services.AddSingleton(SqlConnectionConfigurationCloud);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
