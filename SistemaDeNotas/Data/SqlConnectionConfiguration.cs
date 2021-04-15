@@ -11,3 +11,4 @@ namespace SistemaDeNotas.Data
         public string Value { get; }
     }
 }
+
