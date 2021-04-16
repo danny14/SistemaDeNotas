@@ -25,18 +25,19 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("nota1", notas.nota1, DbType.Int32);
-                parameters.Add("nota2", notas.nota2, DbType.Int32);
-                parameters.Add("nota3", notas.nota3, DbType.Int32);
-                parameters.Add("promedioNotas", notas.promedioNotas, DbType.Double);
+                parameters.Add("nota1", notas.nota1, DbType.Decimal);
+                parameters.Add("nota2", notas.nota2, DbType.Decimal);
+                parameters.Add("nota3", notas.nota3, DbType.Decimal);
+                parameters.Add("promedioNotas", notas.promedioNotas, DbType.Decimal);
                 parameters.Add("idEstudiante", notas.idEstudiante, DbType.Int32);
                 parameters.Add("idMateria", notas.idMateria, DbType.Int32);
+                parameters.Add("idPeriodo", notas.idPeriodo, DbType.Int32);
 
 
-                const string query = @"INSERT INTO notas ( nota1, nota2, nota3, promedioNotas, idEstudiante, idMateria ) 
-                VALUES ( @nota1, @nota2, @nota3, @promedioNotas , @idEstudiante , @idMateria  )";
+                const string query = @"INSERT INTO notas ( nota1, nota2, nota3, promedioNotas, idEstudiante, idMateria , idPeriodo) 
+                VALUES ( @nota1, @nota2, @nota3, @promedioNotas , @idEstudiante , @idMateria , @idPeriodo )";
 
-                await conn.ExecuteAsync(query, new { notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria, notas.idPeriodo }, commandType: CommandType.Text);
             }
 
             return true;
@@ -137,9 +138,10 @@ namespace SistemaDeNotas.Data.Services
                                     promedioNotas = @promedioNotas,
                                     idEstudiante = @idEstudiante,
                                     idMateria = @idMateria,
+                                    idPeriodo = @idPeriodo,
                                     WHERE idNotas = @idNotas";
 
-                await conn.ExecuteAsync(query, new { notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria, notas.idPeriodo}, commandType: CommandType.Text);
             }
 
             return true;

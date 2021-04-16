@@ -27,13 +27,13 @@ namespace SistemaDeNotas.Data.Services
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("idEstudiante", grado.idEstudiante, DbType.Int32);
-                parameters.Add("idMateria", grado.idMateria, DbType.Int32);
+                parameters.Add("nombreGrado", grado.nombreGrado, DbType.String);
 
 
-                const string query = @"INSERT INTO grado ( idEstudiante, idMateria ) 
-                VALUES ( @idEstudiante,  @idMateria  )";
+                const string query = @"INSERT INTO grado ( idEstudiante, nombreGrado ) 
+                VALUES ( @idEstudiante,  @nombreGrado  )";
 
-                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.idMateria }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.nombreGrado }, commandType: CommandType.Text);
             }
 
             return true;
@@ -96,13 +96,13 @@ namespace SistemaDeNotas.Data.Services
                 var parameters = new DynamicParameters();
 
                 parameters.Add("idEstudiante", grado.idEstudiante, DbType.Int32);
-                parameters.Add("idMateria", grado.idMateria, DbType.Int32);
+                parameters.Add("nombreGrado", grado.nombreGrado, DbType.String);
 
                 const string query = @"UPDATE materia SET idEstudiante = @idEstudiante,
-                                    idMateria = @idMateria,
+                                    nombreGrado = @nombreGrado,
                                     WHERE idGrado = @idGrado";
 
-                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.idMateria }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.nombreGrado }, commandType: CommandType.Text);
             }
 
             return true;

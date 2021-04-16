@@ -9,16 +9,17 @@ namespace SistemaDeNotas.Data.Model
     {
         public int idNotas { get; set; }
 
-        public int nota1 { get; set; }
+        public decimal nota1 { get; set; }
 
-        public int nota2 { get; set; }
+        public decimal nota2 { get; set; }
 
-        public int nota3 { get; set; }
+        public decimal nota3 { get; set; }
 
-        public int promedioNotas { get; set; }
+        public decimal promedioNotas { get; set; }
 
         public int idEstudiante { get; set; }
 
         public int idMateria { get; set; }
+        public int idPeriodo { get; set;  }
     }
 }
