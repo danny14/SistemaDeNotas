@@ -44,7 +44,7 @@ namespace SistemaDeNotas.Data.Services
 
 
         /**
-         * Obtener todos los estudiantes 
+         * Obtener todas las notas 
         **/
         public async Task<IEnumerable<Notas>> GetAllNotas()
         {
@@ -87,9 +87,35 @@ namespace SistemaDeNotas.Data.Services
                 return await conn.QueryFirstOrDefaultAsync<Notas>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
             }
         }
+        /**
+         * Metodo para obtener Promedio de Notas por grado 
+        */
+        public async Task<Notas> GetNotasPorPromedio(int idGrado)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = "SELECT AVG (promedioNotas) AS PromedioNotas,materia.nombreMateria FROM notas, materia WHERE notas.idMateria = materia.idMateria GROUP BY materia.nombreMateria";
+                return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
+            }
+                
+        }
 
+
+
+        /**
+         * Metodo para obtener Promedio de Notas por estudiante
+        */
+        public async Task<Notas> GetNotasPorMateria(int idMateria)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = "SELECT AVG (promedioNotas) AS PromedioNotas,estudiante.nombresEstudiante FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante GROUP BY estudiante.nombresEstudiante";
+                return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idMateria = idMateria }, commandType: CommandType.Text);
+            }
+
+        }
         /*
-         * Metodo para actualizar una Materia 
+         * Metodo para actualizar una nota
          */
         public async Task<bool> NotasUpdate(Notas notas)
         {

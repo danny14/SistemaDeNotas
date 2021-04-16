@@ -41,10 +41,10 @@ namespace SistemaDeNotas
 
 
             //Conexion a la BD
+            //var SqlConnectionConfiguration = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContext"));
             var SqlConnectionConfiguration = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContext"));
-            var SqlConnectionConfigurationCloud = new SqlConnectionConfiguration(Configuration.GetConnectionString("SqlDBContextCloud"));
             services.AddSingleton(SqlConnectionConfiguration);
-            services.AddSingleton(SqlConnectionConfigurationCloud);
+            
 
 
           
