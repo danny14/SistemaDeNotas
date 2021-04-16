@@ -100,9 +100,21 @@ namespace SistemaDeNotas.Data.Services
             }
         }
 
+        /**
+         * Obtener el estado del estudiantes que ya finalizaron la materia o que ya la cursaron
+        **/
+        public async Task<Notas> GetEstadoFinalizadoEstudiante(int idGrado)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = "SELECT estudiante.nombresEstudiante, promedioNotas FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante AND promedioNotas != 0";
+                return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
+            }
+
+        }
 
         /**
-         * Metodo para obtener los Estudiantes que van perdiendo
+         * Metodo para obtener los Estudiantes que perdieron
          * 
          */
         public async Task<IEnumerable<Estudiante>> GetEstudiantePerdiendo()
