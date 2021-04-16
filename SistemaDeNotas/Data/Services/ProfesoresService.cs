@@ -34,8 +34,8 @@ namespace SistemaDeNotas.Data.Services
 
 
 
-                const string query = @"INSERT INTO profesor ( nombreProfesor, apellidoProfesor, direccionProfesor, telefonoProfesor, correoProfesor ) 
-                VALUES ( @nombreProfesor, @apellidoProfesor, @direccionProfesor, @telefonoProfesor , @correoProfesor  )";
+                const string query = @"INSERT INTO profesores ( nombreProfesor, apellidoProfesor, direccionProfesor, telefonoProfesor, correoProfesor ) 
+                VALUES ( @nombreProfesor, @apellidoProfesores, @direccionProfesor, @telefonoProfesor , @correoProfesor  )";
 
                 await conn.ExecuteAsync(query, new { profesor.nombreProfesor, profesor.apellidoProfesor, profesor.direccionProfesor, profesor.telefonoProfesor, profesor.correoProfesor }, commandType: CommandType.Text);
             }
@@ -52,7 +52,7 @@ namespace SistemaDeNotas.Data.Services
             IEnumerable<Profesores> profesor;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT * FROM profesor";
+                const string query = "SELECT * FROM profesores";
                 profesor = await conn.QueryAsync<Profesores>(query, commandType: CommandType.Text);
             }
 
@@ -67,7 +67,7 @@ namespace SistemaDeNotas.Data.Services
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                var query = @"DELETE FROM profesor
+                var query = @"DELETE FROM profesores
                             WHERE idProfesor = @idProfesor";
                 await conn.ExecuteAsync(query.ToString(), new { idProfesor = idProfesor }, commandType: CommandType.Text);
             }
@@ -84,7 +84,7 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
 
-                const string query = "SELECT * FROM profesor WHERE idProfesor = @Id";
+                const string query = "SELECT * FROM profesores WHERE idProfesor = @Id";
                 return await conn.QueryFirstOrDefaultAsync<Profesores>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
             }
         }
@@ -106,7 +106,7 @@ namespace SistemaDeNotas.Data.Services
                 parameters.Add("correoProfesor", profesor.correoProfesor, DbType.String);
 
 
-                const string query = @"UPDATE profesor SET nombreProfesor = @nombreProfesor,
+                const string query = @"UPDATE profesores SET nombreProfesor = @nombreProfesor,
                                     apellidoProfesor = @apellidoProfesor,
                                     direccionProfesor = @direccionProfesor,
                                     telefonoProfesor = @telefonoProfesor,

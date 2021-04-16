@@ -87,6 +87,30 @@ namespace SistemaDeNotas.Data.Services
                 return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
             }
         }
+        /**
+        *  Obtener Estudiante por Materia  
+        *
+        */
+        public async Task<Estudiante> GetEstudianteByMateria(int idMateria, int idProfesor)
+        {
+            using (var conn = new SqlConnection(_configuration.Value)) {
+                const string query = "SELECT estudiante.nombresEstudiante,estudiante.apellidosEstudiante, materia.nombreMateria , profesores.nombreProfesor FROM estudiante,grado,materia,profesores WHERE estudiante.idEstudiante = grado.idEstudiante AND materia.idMateria = grado.idMateria AND profesores.idProfesor = materia.idMateria AND materia.idMateria = @idMateria AND profesores.idProfesor = @idProfesor;";
+
+                return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { idMateria = idMateria, idProfesor = idProfesor }, commandType: CommandType.Text);
+            }
+        }
+        /**
+         *  Obtener Estudiante por Grado
+         */
+        public async Task<Estudiante> GetEstudianteByGrado(int idMateria, int idProfesor)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = "SELECT estudiante.nombresEstudiante,estudiante.apellidosEstudiante, materia.nombreMateria , profesores.nombreProfesor FROM estudiante,grado,materia,profesores WHERE estudiante.idEstudiante = grado.idEstudiante AND materia.idMateria = grado.idMateria AND profesores.idProfesor = materia.idMateria AND materia.idMateria = @idMateria AND profesores.idProfesor = @idProfesor;";
+
+                return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { idMateria = idMateria, idProfesor = idProfesor }, commandType: CommandType.Text);
+            }
+        }
 
         /*
          * Metodo para actualizar un estudiante 

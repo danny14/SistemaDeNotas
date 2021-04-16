@@ -4,6 +4,7 @@
 @using SistemaDeNotas.Data.Services
 
 @inject IMateriaService MateriaService
+@inject IProfesoresService ProfesoresService
 @inject NavigationManager NavigationManager
 
 <h1>Adicionar Film</h1>
@@ -29,7 +30,16 @@
 </EditForm>
 @code {
 
+    IEnumerable<Profesores> profesores;
+
     Materia materia = new Materia();
+
+
+    protected override async Task OnInitializedAsync() {
+
+        profesores = await ProfesoresService.GetAllProfesor();
+
+    }
 
     protected async Task MateriaInsert()
     {
