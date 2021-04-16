@@ -91,14 +91,15 @@ namespace SistemaDeNotas.Data.Services
          * Metodo para obtener los Estudiantes que van perdiendo
          * 
          */
-        public async Task<Notas> GetEstudiantePerdiendo(int idGrado)
+        public async Task<IEnumerable<Estudiante>> GetEstudiantePerdiendo()
         {
+            IEnumerable<Estudiante> estudiantes;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT estudiante.nombresEstudiante, promedioNotas FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante AND promedioNotas < 3";
-                return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
+                const string query = "SELECT estudiante.idEstudiante,estudiante.nombresEstudiante,estudiante.apellidosEstudiante, estudiante.direccionEstudiante, estudiante.telefonoEstudiante, correoEstudiante FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante AND promedioNotas < 3";
+                estudiantes = await conn.QueryAsync<Estudiante>(query, commandType: CommandType.Text);
             }
-
+            return estudiantes;
         }
         /**
         *  Obtener Estudiante por Materia  

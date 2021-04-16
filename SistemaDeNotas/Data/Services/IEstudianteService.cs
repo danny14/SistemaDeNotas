@@ -12,7 +12,8 @@ namespace SistemaDeNotas.Data.Services
         Task<IEnumerable<Estudiante>> GetAllEstudiantes();
         //obtener un estudiante por ID
         Task<Estudiante> GetEstudianteDetail(int id);
-
+        //obtener los estudiantes que han perdido
+       Task<IEnumerable<Estudiante>>  GetEstudiantePerdiendo();
         //actualizar estudiante
         Task<bool> EstudianteUpdate(Estudiante estudiante);
         // Eliminar estudiante

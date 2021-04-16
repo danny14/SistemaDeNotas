@@ -3,7 +3,8 @@
 @using SistemaDeNotas.Data.Model;
 @using SistemaDeNotas.Data.Services;
 
-@inject IEstudianteService EstudianteService; 
+@inject IEstudianteService EstudianteService;
+@inject INotasService NotasService;
 @inject NavigationManager NavigationManager;
 
 
@@ -49,14 +50,58 @@
 
     </tbody>
 </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (estudiantesPerdiendo != null)
+        {
+            @foreach (var estudianteperdido in estudiantesPerdiendo)
+            {
+                <tr>
+                    <td>@estudianteperdido.idEstudiante</td>
+                    <td>@estudianteperdido.NombresEstudiante</td>
+                    <td>@estudianteperdido.ApellidosEstudiante</td>
+                    <td>@estudianteperdido.DireccionEstudiante</td>
+                    <td>@estudianteperdido.TelefonoEstudiante</td>
+                    <td>@estudianteperdido.CorreoEstudiante</td>
+                </tr>
+
+            }
+        }
+        </tbody>
+    </table>
+@if (estudiantesPerdiendo != null)
+{
+    @foreach (var estudianteperdido in estudiantesPerdiendo)
+    {
+        @estudianteperdido.idEstudiante
+        @estudianteperdido.NombresEstudiante
+        @estudianteperdido.CorreoEstudiante
+        @estudianteperdido.DireccionEstudiante
+    }
+}
+
 
 @code {
 
 
     IEnumerable<Estudiante> estudiantes;
+    IEnumerable<Estudiante> estudiantesPerdiendo;
+
     protected override async Task OnInitializedAsync()
     {
         estudiantes = await EstudianteService.GetAllEstudiantes();
+        //estudiantesPerdiendo = await EstudianteService.GetEstudiantePerdiendo();
     }
 
 
@@ -65,7 +110,8 @@
         NavigationManager.NavigateTo("/EstudianteEdit/" + id);
     }
 
-    protected async Task DeleteEstudiante(int id) {
+    protected async Task DeleteEstudiante(int id)
+    {
 
         await EstudianteService.EstudianteDelete(id);
         NavigationManager.NavigateTo("/");

@@ -11,8 +11,10 @@ namespace SistemaDeNotas.Data.Model
         public int idGrado { get; set; }
 
         public int idMateria { get; set; }
+
         public string idEstudiante { get; set; }
 
+        public Estudiante estudiante { get; set; }
 
     }
 }
