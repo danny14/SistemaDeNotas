@@ -88,6 +88,20 @@ namespace SistemaDeNotas.Data.Services
             }
         }
         /**
+         * Obtener las notas del estudiante 
+        **/
+        public async Task<Estudiante> GetNotasEstudianteDetail(int nota)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+
+                const string query = "SELECT notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, materia.nombreMateria FROM notas , estudiante, materia, periodo WHERE notas.idEstudiante = estudiante.idEstudiante AND notas.idMateria = materia.idMateria AND notas.idPeriodo = periodo.idPeriodo AND estudiante.idEstudiante = @Id";
+                return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { Id = nota }, commandType: CommandType.Text);
+            }
+        }
+
+
+        /**
          * Metodo para obtener los Estudiantes que van perdiendo
          * 
          */
