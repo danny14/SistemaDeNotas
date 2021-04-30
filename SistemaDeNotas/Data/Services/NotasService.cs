@@ -25,7 +25,7 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("idNotas", notas.idNotas, DbType.Int32);
+                parameters.Add("idNotas", notas.idNotas, DbType.Int32);//QUITAR EL ID Y LOS QUE NO SE DEBEN DE CAMBIAR
                 parameters.Add("nota1", notas.nota1, DbType.Single);
                 parameters.Add("nota2", notas.nota2, DbType.Single);
                 parameters.Add("nota3", notas.nota3, DbType.Single);
@@ -117,37 +117,45 @@ namespace SistemaDeNotas.Data.Services
             }
 
         }
+
+
+        protected SqlConnection dbConnection()
+        {
+            return new SqlConnection(_configuration.Value);
+        }
+
+
         /*
          * Metodo para actualizar una nota
          */
-        public async Task<bool> NotasUpdate(Notas notas)
+       
+public async Task<bool> NotasUpdate(Notas notas)
         {
-            using (var conn = new SqlConnection(_configuration.Value))
-            {
+            var db = dbConnection();
+            var sql = @"UPDATE notas SET nota1 = @nota1, 
+                nota2 = @nota2, 
+                    nota3 = @nota3
+                     WHERE idNotas = @idNotas";
 
-                var parameters = new DynamicParameters();
-                parameters.Add("idNotas", notas.idNotas, DbType.Int32);
-                parameters.Add("nota1", notas.nota1, DbType.Single);
-                parameters.Add("nota2", notas.nota2, DbType.Single);
-                parameters.Add("nota3", notas.nota3, DbType.Single);
-                parameters.Add("promedioNotas", notas.promedioNotas, DbType.Single);
-                parameters.Add("idEstudiante", notas.idEstudiante, DbType.String);
-                parameters.Add("idMateria", notas.idMateria, DbType.Int32);
+            var result = await db.ExecuteAsync(sql.ToString(), new { notas.nota1, notas.nota2, notas.nota3, notas.idNotas });
+            return result > 0;
+            //using (var conn = new SqlConnection(_configuration.Value))
+            //{
 
-                const string query = @"UPDATE materia SET nota1 = @nota1,
-                                    nota2 = @nota2,
-                                    nota3 = @nota3,
-                                    promedioNotas = @promedioNotas,
-                                    idEstudiante = @idEstudiante,
-                                    idMateria = @idMateria,
-                                    idPeriodo = @idPeriodo,
-                                    WHERE idNotas = @idNotas";
+            //var parameters = new DynamicParameters();
+            //parameters.Add("idNotas", notas.idNotas, DbType.Int32);
+            //parameters.Add("nota1", notas.nota1, DbType.Single);
+            //parameters.Add("nota2", notas.nota2, DbType.Single);
+            //parameters.Add("nota3", notas.nota3, DbType.Single);
+            // parameters.Add("promedioNotas", notas.promedioNotas, DbType.Single);
+            //parameters.Add("idEstudiante", notas.idEstudiante, DbType.Int32);
+            //  parameters.Add("idMateria", notas.idMateria, DbType.Int32);
 
-                await conn.ExecuteAsync(query, new { notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria, notas.idPeriodo}, commandType: CommandType.Text);
+
+            //}
+
+            // return true;
             }
 
-            return true;
         }
-
-    }
 }

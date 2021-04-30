@@ -9,7 +9,7 @@
 
 
 <h1>Lista de Notas</h1>
-<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>
+@*<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>*@
 <table class="table">
     <thead>
         <tr>
@@ -42,9 +42,10 @@
                         <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarNotas(nota.idNotas)">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
-                            <span class="oi oi-trash" aria-hidden="true"></span>
-                        </button>
+                        @*<button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
+            <span class="oi oi-trash" aria-hidden="true"></span>
+        </button>*@
+
                     </td>
                 </tr>
             }
@@ -72,13 +73,13 @@
         NavigationManager.NavigateTo("/NotasEdit/" + id);
     }
 
-    protected async Task DeleteNotas(int id)
+   /* protected async Task DeleteNotas(int id)
     {
 
         await NotasService.NotasDelete(id);
         NavigationManager.NavigateTo("/");
 
-    }
+    }*/
 
 }
 
