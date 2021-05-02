@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SistemaDeNotas.Data.Services;
+using Syncfusion.Blazor;
 
 namespace SistemaDeNotas
 {
@@ -27,6 +28,7 @@ namespace SistemaDeNotas
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSyncfusionBlazor();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
@@ -53,6 +55,7 @@ namespace SistemaDeNotas
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDM4MTM4QDMxMzkyZTMxMmUzMFU2bXFwL0lseEVLM09tYU9NYnpva1AvMnJaUURzU3RUSExRQ2FQNzBFdHM9");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

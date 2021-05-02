@@ -5,10 +5,11 @@
 
 @inject INotasService NotasService;
 @inject NavigationManager NavigationManager;
+@using Microsoft.AspNetCore.Http
 
 
-<h1>Lista de Notass</h1>
-<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>
+<h1>Lista de Notas</h1>
+@*<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>*@
 <table class="table">
     <thead>
         <tr>
@@ -34,13 +35,17 @@
                     <td>@nota.promedioNotas</td>
                     <td>@nota.idEstudiante</td>
                     <td>@nota.idMateria</td>
+                    <td>@nota.idPeriodo</td>
+
+
                     <td>
                         <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarNotas(nota.idNotas)">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
-                            <span class="oi oi-trash" aria-hidden="true"></span>
-                        </button>
+                        @*<button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
+            <span class="oi oi-trash" aria-hidden="true"></span>
+        </button>*@
+
                     </td>
                 </tr>
             }
@@ -51,13 +56,15 @@
     </tbody>
 </table>
 
+
+
 @code {
 
 
     IEnumerable<Notas> notas;
     protected override async Task OnInitializedAsync()
     {
-        notas = await NotasService.GetAllNotas();    
+        notas = await NotasService.GetAllNotas();
     }
 
 
@@ -66,13 +73,15 @@
         NavigationManager.NavigateTo("/NotasEdit/" + id);
     }
 
-    protected async Task DeleteNotas(int id)
+   /* protected async Task DeleteNotas(int id)
     {
 
         await NotasService.NotasDelete(id);
         NavigationManager.NavigateTo("/");
 
-    }
+    }*/
 
 }
+
+
 

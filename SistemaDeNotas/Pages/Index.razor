@@ -1,7 +1,79 @@
 ﻿@page "/"
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+                Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@*
+        using Syncfusion.Blazor.Grids
+    <div class="col-lg-12 control-section">
+        <div class="content-wrapper">
+            <div class="row">
+                <SfGrid DataSource="@notas" AllowPaging="true">
+                    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+                    <GridColumns>
+                        <GridColumn Field=@nameof(Notas.idNotas) HeaderText="ID nota" IsPrimaryKey="true" ValidationRules="@(new ValidationRules { Required = true, Number = true })" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.idEstudiante) HeaderText="ID Alumno" ValidationRules="@(new ValidationRules { Required = true, })" Width="150"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.idMateria) HeaderText="Materia" Edit="false" ValidationRules="@(new ValidationRules { Required = true })" Width="150"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.nota1) HeaderText="Nota 1" ValidationRules="@(new ValidationRules { Required = true, Range = new double[] { 1, 5 } })" EditType="EditType.NumericEdit" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.nota2) HeaderText="Nota 2" ValidationRules="@(new ValidationRules { Required = true, Range = new double[] { 1, 5 } })" EditType="EditType.NumericEdit" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.nota3) HeaderText="Nota 3" ValidationRules="@(new ValidationRules { Required = true, Range = new double[] { 1, 5 } })" EditType="EditType.NumericEdit" TextAlign="TextAlign.Right" Width="140"></GridColumn>
+                        <GridColumn Field=@nameof(Notas.promedioNotas) HeaderText="Promedio" ValidationRules="@(new ValidationRules { Required = true })" Width="150"></GridColumn>
+                        <GridColumn HeaderText="Manage Records" Width="150">
+                            <GridCommandColumns>
+
+                                    <GridCommandColumn Type="CommandButtonType.Edit"  ButtonOption="@(new CommandButtonOptions() { IconCss = "e-icons e-edit", CssClass = "e-flat" })"></GridCommandColumn>
+                                <GridCommandColumn Type="CommandButtonType.Save" ButtonOption="@(new CommandButtonOptions() { IconCss = "e-icons e-save", CssClass = "e-flat" })"></GridCommandColumn>
+                                <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() { IconCss = "e-icons e-cancel-icon", CssClass = "e-flat" })"></GridCommandColumn>
+                            </GridCommandColumns>
+                        </GridColumn>
+                    </GridColumns>
+                </SfGrid>
+            </div>
+        </div>
+    </div>
+    @code{
+        IEnumerable<Notas> notas;
+        protected override async Task OnInitializedAsync()
+        {
+            notas = await NotasService.GetAllNotas();
+
+            if (idNotas > 0)
+            {
+                nota = await NotasService.GetNotasDetail(idNotas);
+            }
+        }
+
+
+        [Parameter]
+        public int idNotas { set; get; }
+
+        Notas nota = new Notas();
+
+
+
+        protected async Task NotasUpdate()
+        {
+            await NotasService.NotasUpdate(nota);
+
+            NavigationManager.NavigateTo("/");
+        }
+
+        protected void Cancel()
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+
+    }
+
+
+
+
+
+*@

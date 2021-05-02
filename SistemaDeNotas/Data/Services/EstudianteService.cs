@@ -168,7 +168,7 @@ namespace SistemaDeNotas.Data.Services
                 parameters.Add("telefonoEstudiante", estudiante.TelefonoEstudiante, DbType.String);
                 parameters.Add("correoEstudiante", estudiante.CorreoEstudiante, DbType.String);
 
-                const string query = @"UPDATE Tienda SET NombresEstudiante = @nombresEstudiante,
+                const string query = @"UPDATE estudiante SET NombresEstudiante = @nombresEstudiante,
                                     ApellidosEstudiante = @apellidosEstudiante,
                                     DireccionEstudiante = @direccionEstudiante,
                                     TelefonoEstudiante = @telefonoEstudiante,

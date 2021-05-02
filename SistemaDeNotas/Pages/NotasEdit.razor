@@ -7,15 +7,14 @@
 @inject INotasService NotasService
 @inject NavigationManager NavigationManager
 
-@using Microsoft.AspNetCore.Http
-
 <h3>Editar Notas </h3>
 
+
 <EditForm Model="@nota" OnValidSubmit="@NotasUpdate">
+       
+    
     <table>
-        <tr>
-            <td><input type="hidden" @bind="nota.idNotas" required disabled /></td>
-        </tr>
+        
         <tr>
             <td>Nota 1:</td>
             <td><input type="text" @bind="nota.nota1" /></td>
@@ -29,18 +28,8 @@
             <td><input type="text" @bind="nota.nota3" /></td>
         </tr>
 
-        <tr>
-            <td>Promedio de Notas:</td>
-            <td><input type="text" @bind="nota.promedioNotas" /></td>
-        </tr>
-        <tr>
-            <td>Estudiante:</td>
-            <td><input type="text" @bind="nota.idEstudiante" /></td>
-        </tr>
-        <tr>
-            <td>Materia:</td>
-            <td><input type="text" @bind="nota.idMateria" /></td>
-        </tr>
+
+
         <tr>
             <td colspan="2">
                 <input type="submit" value="Adicionar" @onclick="@NotasUpdate" />
@@ -65,6 +54,7 @@
             nota = await NotasService.GetNotasDetail(idNotas);
         }
 
+
     }
 
     protected async Task NotasUpdate()
@@ -76,6 +66,7 @@
 
     protected void Cancel()
     {
+        NavigationManager.NavigateTo("/");
     }
 
 }

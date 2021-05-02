@@ -7,7 +7,7 @@
 @inject NavigationManager NavigationManager
 
 <h1>Adicionar Film</h1>
-
+ 
 <EditForm Model="@nota" OnValidSubmit="@NotasInsert">
     <table>
         <tr>
@@ -16,15 +16,15 @@
         </tr>
         <tr>
             <td>Nota 1:</td>
-            <td><input type="text" @bind="nota.nota1" required /></td>
+            <td><input type="number" @bind="nota.nota1" required /></td>
         </tr>
         <tr>
             <td>Nota 2:</td>
-            <td><input type="text" @bind="nota.nota2" /></td>
+            <td><input type="number" @bind="nota.nota2" /></td>
         </tr>
         <tr>
             <td>Nota 3:</td>
-            <td><input type="text" @bind="nota.nota3" /></td>
+            <td><input type="number" @bind="nota.nota3" /></td>
         </tr>
 
         <tr>
@@ -45,8 +45,7 @@
 </EditForm>
 @code {
 
-    Notas 
-nota = new Notas();
+    Notas nota = new Notas();
 
     protected async Task NotasInsert()
     {
