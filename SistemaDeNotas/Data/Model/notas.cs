@@ -21,5 +21,7 @@ namespace SistemaDeNotas.Data.Model
 
         public int idMateria { get; set; }
         public int idPeriodo { get; set;  }
+
+        
     }
 }
