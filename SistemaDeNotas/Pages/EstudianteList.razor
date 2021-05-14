@@ -10,6 +10,9 @@
 
 <h1>Lista de Estudiantes</h1>
 <a class="btn btn-success" href="EstudianteAdd">Nuevo Estudiante</a>
+<button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> MateriaPerdida()">
+    <span class="oi oi-eye" aria-hidden="true"> Estudiantes que van perdiendo la materia</span>
+</button>
 <table class="table">
     <thead>
         <tr>
@@ -78,8 +81,8 @@
 
             }
         }
-        </tbody>
-    </table>
+    </tbody>
+</table>
 @if (estudiantesPerdiendo != null)
 {
     @foreach (var estudianteperdido in estudiantesPerdiendo)
@@ -101,13 +104,18 @@
     protected override async Task OnInitializedAsync()
     {
         estudiantes = await EstudianteService.GetAllEstudiantes();
-        //estudiantesPerdiendo = await EstudianteService.GetEstudiantePerdiendo();
+        estudiantesPerdiendo = await EstudianteService.GetEstudiantePerdiendo();
     }
 
 
     void EditarEstudiante(int id)
     {
         NavigationManager.NavigateTo("/EstudianteEdit/" + id);
+    }
+
+    void MateriaPerdida()
+    {
+        NavigationManager.NavigateTo("/MateriaPerdidaSearch");
     }
 
     protected async Task DeleteEstudiante(int id)

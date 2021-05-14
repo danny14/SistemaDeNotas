@@ -1,0 +1,62 @@
+﻿@page "/EstudianteProfesorList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+
+@inject IProfesoresService ProfesoresService;
+@inject IListadoEstudianteProfesorService ProfesorEstudianteService;
+@inject NavigationManager NavigationManager;
+
+<h3>Lista de Estudiantes por Profesor</h3>
+
+<select class="form-select" aria-label="Default select example" @onchange="MostrarEstudiantes">
+    @if (profesores != null)
+    {
+        @foreach (var profesor in profesores)
+        {
+            <option value="@profesor.idProfesor">@profesor.nombreProfesor</option>
+        }
+    }
+</select>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Materia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (estudiantes != null ) {
+            @foreach (var estudiante in estudiantes) {
+                <tr>
+                    <td>@estudiante.NombresEstudiante</td>
+                    <td>@estudiante.ApellidosEstudiante</td>
+                    <td>@estudiante.NombreMateria</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+
+    IEnumerable<Profesores> profesores;
+    IEnumerable<ListadoEstudianteProfesor> estudiantes;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        profesores = await ProfesoresService.GetAllProfesor();
+
+
+    }
+
+    async Task MostrarEstudiantes(ChangeEventArgs args)
+    {
+        estudiantes = await ProfesorEstudianteService.GetAllEstudiantesDelProfesorA(Convert.ToByte(args.Value));
+    }
+
+}
