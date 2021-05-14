@@ -23,18 +23,6 @@ namespace SistemaDeNotas.Data.Model
         public int idPeriodo { get; set;  }
         public Estudiante estudiantito { get; set; }
 
-        public Estudiante GetEstudiante()
-        {
-            estudiantito = new Estudiante();
-            estudiantito.idEstudiante = idEstudiante;
-            estudiantito.NombresEstudiante = estudiantito.NombresEstudiante;
-            estudiantito.ApellidosEstudiante = estudiantito.ApellidosEstudiante;
-            estudiantito.DireccionEstudiante = estudiantito.DireccionEstudiante;
-            estudiantito.TelefonoEstudiante = estudiantito.TelefonoEstudiante;
-            estudiantito.CorreoEstudiante = estudiantito.CorreoEstudiante;
-
-            return estudiantito;
-
-        }
+        
     }
 }
