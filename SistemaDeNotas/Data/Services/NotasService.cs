@@ -51,13 +51,15 @@ namespace SistemaDeNotas.Data.Services
         **/
 
       
-        public async Task<IEnumerable<Notas>> GetAllNotas()
+        public async Task<IEnumerable<notaestudiante>> GetAllNotas()
          {
-        IEnumerable<Notas> notas;
+        IEnumerable<notaestudiante> notas;
        using (var conn = new SqlConnection(_configuration.Value))
        {
-                const string query = "SELECT * FROM notas";
-                notas = await conn.QueryAsync<Notas>(query, commandType: CommandType.Text);
+                const string query = @"SELECT estudiante.idEstudiante, estudiante.nombresEstudiante, estudiante.apellidosEstudiante, notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas
+FROM estudiante, notas
+WHERE estudiante.idEstudiante = notas.idNotas";
+                notas = await conn.QueryAsync<notaestudiante>(query, commandType: CommandType.Text);
                  
                 
         }
@@ -175,4 +177,6 @@ public async Task<bool> NotasUpdate(Notas notas)
             }
 
         }
+
+
 }

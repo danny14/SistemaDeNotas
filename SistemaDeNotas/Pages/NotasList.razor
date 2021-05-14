@@ -20,8 +20,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Apellido</th>
-                    <th>Nombre</th>
+  
+                    <th>Estudiante</th>
                     <th>Nota 1</th>
                     <th>Nota 2</th>
                     <th>Nota 3</th>
@@ -32,19 +32,20 @@
             </thead>
             <tbody>
 
-                @if (notas != null && estudiantes != null)
+                @if (notiviris != null)
                 {
 
 
-                    @foreach (var nota in notas)
-                       // @foreach (var estudiante in estudiantes)
-                        {
+                    @foreach (var nota in notiviris)
+                    // && estudiantes != null @foreach (var estudiante in estudiantes)
+                    {
                 <tr>
                     @*<td>@estudiante.idEstudiante</td>
-              <td>@estudiante.ApellidosEstudiante</td>
-             <td>@estudiante.NombresEstudiante</td>*@
-
-                    <td>@nota.estudiantito</td>
+         <td>@estudiante.ApellidosEstudiante</td>
+        <td>@estudiante.NombresEstudiante</td>*@
+                    <td>@nota.idEstudiante</td>
+                    <td>@(nota.ApellidosEstudiante + " " + nota.NombresEstudiante)</td>
+                    <td>@nota.nota1</td>
                     <td>@nota.nota2</td>
                     <td>@nota.nota3</td>
                     <td>@nota.promedioNotas</td>
@@ -92,12 +93,11 @@
         @code {
 
 
-            IEnumerable<Notas> notas;
-            IEnumerable<Estudiante> estudiantes;
+            IEnumerable<notaestudiante> notiviris;
             protected override async Task OnInitializedAsync()
             {
-                notas = await NotasService.GetAllNotas();
-                estudiantes = await EstudianteService.GetAllEstudiantes();
+          
+                notiviris = await NotasService.GetAllNotas();
 
             }
 

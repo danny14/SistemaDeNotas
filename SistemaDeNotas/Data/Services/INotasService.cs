@@ -6,7 +6,7 @@ namespace SistemaDeNotas.Data.Services
 {
     public interface INotasService
     {
-        Task<IEnumerable<Notas>> GetAllNotas();
+        Task<IEnumerable<notaestudiante>> GetAllNotas();
         Task<Notas> GetNotasDetail(int id);
         Task<bool> NotasDelete(int idNotas);
         Task<bool> NotasInsert(Notas notas);
