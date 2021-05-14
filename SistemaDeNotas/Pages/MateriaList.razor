@@ -13,21 +13,24 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Profesor</th>
             <th>Materia</th>
-            <th>Accion</th>
-            
+            <th>Profesor</th>
+            <th>Dia</th>
+            <th>Hora</th>
+
         </tr>
     </thead>
     <tbody>
-        @if (materias != null)
+        @if (martuchis != null)
         {
-            @foreach (var materia in materias)
+            @foreach (var materia in martuchis)
             {
         <tr>
             <td>@materia.idMateria</td>
-            <td>@materia.idProfesor</td>
             <td>@materia.nombreMateria</td>
+            <td>@(materia.nombreProfesor + " " + materia.apellidoProfesor)</td>
+            <td>@materia.dia</td>
+            <td>@materia.hora</td>
             <td>
                 <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @onclick="()=> EditarMateria(materia.idMateria)">
                     <span class="oi oi-pencil" aria-hidden="true"></span>
@@ -48,10 +51,10 @@
 @code {
 
 
-    IEnumerable<Materia> materias;
+    IEnumerable<profesormateria> martuchis;
     protected override async Task OnInitializedAsync()
     {
-        materias = await MateriaService.GetAllMaterias();
+        martuchis = await MateriaService.GetAllMaterias();
     }
 
 

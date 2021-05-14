@@ -6,7 +6,7 @@ namespace SistemaDeNotas.Data.Services
 {
     public interface IMateriaService
     {
-        Task<IEnumerable<Materia>> GetAllMaterias();
+        Task<IEnumerable<profesormateria>> GetAllMaterias();
         Task<Materia> GetMateriaDetail(int id);
         Task<bool> MateriaDelete(int idMateria);
         Task<bool> MateriaInsert(Materia materia);

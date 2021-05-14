@@ -42,13 +42,15 @@ namespace SistemaDeNotas.Data.Services
         /**
          * Obtener todos los estudiantes 
         **/
-        public async Task<IEnumerable<Materia>> GetAllMaterias()
+        public async Task<IEnumerable<profesormateria>> GetAllMaterias()
         {
-            IEnumerable<Materia> materia;
+            IEnumerable<profesormateria> materia;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT * FROM materia";
-                materia = await conn.QueryAsync<Materia>(query, commandType: CommandType.Text);
+                const string query = @"SELECT materia.idMateria, materia.nombreMateria, profesores.nombreProfesor, profesores.apellidoProfesor, materia.dia, materia.hora
+                                        FROM profesores, materia
+                                            WHERE p.idProfesor = m.idMateria";
+                materia = await conn.QueryAsync<profesormateria>(query, commandType: CommandType.Text);
             }
 
             return materia;
