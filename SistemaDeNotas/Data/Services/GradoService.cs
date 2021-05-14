@@ -98,8 +98,9 @@ namespace SistemaDeNotas.Data.Services
                 parameters.Add("idEstudiante", grado.idEstudiante, DbType.Int32);
                 parameters.Add("nombreGrado", grado.nombreGrado, DbType.String);
 
-                const string query = @"UPDATE materia SET idEstudiante = @idEstudiante,
-                                    nombreGrado = @nombreGrado,
+                const string query = @"UPDATE grado 
+                                    SET idEstudiante = @idEstudiante,
+                                    nombreGrado = @nombreGrado
                                     WHERE idGrado = @idGrado";
 
                 await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.nombreGrado }, commandType: CommandType.Text);

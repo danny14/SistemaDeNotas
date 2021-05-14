@@ -110,7 +110,7 @@ namespace SistemaDeNotas.Data.Services
                                     apellidoProfesor = @apellidoProfesor,
                                     direccionProfesor = @direccionProfesor,
                                     telefonoProfesor = @telefonoProfesor,
-                                    correoProfesor = @correoProfesor,
+                                    correoProfesor = @correoProfesor
                                     WHERE idProfesor = @idProfesor";
 
                 await conn.ExecuteAsync(query, new { profesor.nombreProfesor, profesor.apellidoProfesor, profesor.direccionProfesor, profesor.telefonoProfesor, profesor.correoProfesor }, commandType: CommandType.Text);

@@ -35,10 +35,10 @@ namespace SistemaDeNotas.Data.Services
                 parameters.Add("idPeriodo", notas.idPeriodo, DbType.Int32);
 
 
-                const string query = @"INSERT INTO notas (idNotas, nota1, nota2, nota3, promedioNotas, idEstudiante, idMateria , idPeriodo) 
-                VALUES ( @idNotas, @nota1, @nota2, @nota3, @promedioNotas , @idEstudiante , @idMateria , @idPeriodo )";
+                const string query = @"INSERT INTO notas (idNotas, nota1, nota2, nota3) 
+                VALUES ( @idNotas, @nota1, @nota2, @nota3)";
 
-                await conn.ExecuteAsync(query, new {notas.idNotas, notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, notas.idEstudiante, notas.idMateria, notas.idPeriodo },
+                await conn.ExecuteAsync(query, new {notas.idNotas, notas.nota1, notas.nota2, notas.nota3},
                     commandType: CommandType.Text);
             }
 
@@ -49,18 +49,35 @@ namespace SistemaDeNotas.Data.Services
         /**
          * Obtener todas las notas 
         **/
+
+      
         public async Task<IEnumerable<Notas>> GetAllNotas()
-        {
-            IEnumerable<Notas> notas;
-            using (var conn = new SqlConnection(_configuration.Value))
-            {
+         {
+        IEnumerable<Notas> notas;
+       using (var conn = new SqlConnection(_configuration.Value))
+       {
                 const string query = "SELECT * FROM notas";
                 notas = await conn.QueryAsync<Notas>(query, commandType: CommandType.Text);
-            }
+                 
+                
+        }
+           
+
 
             return notas;
-        }
+         }
 
+        public async Task<IEnumerable<Estudiante>> GetAllEstudiantes()
+        {
+            IEnumerable<Estudiante> estudiantes;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = "SELECT * FROM estudiante";
+                estudiantes = await conn.QueryAsync<Estudiante>(query, commandType: CommandType.Text);
+            }
+
+            return estudiantes;
+        }
 
         /**
          * Eliminar una Nota
