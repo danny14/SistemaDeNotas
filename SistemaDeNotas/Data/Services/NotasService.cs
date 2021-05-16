@@ -139,7 +139,7 @@ WHERE estudiante.idEstudiante = notas.idNotas";
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT AVG (promedioNotas) AS PromedioNotas,materia.nombreMateria FROM notas, materia WHERE notas.idMateria = materia.idMateria GROUP BY materia.nombreMateria";
+                const string query = "SELECT AVG (promedioNotas) AS PromedioNotas,materia.nombreMateria as NombreMateria FROM notas, materia WHERE notas.idMateria = materia.idMateria GROUP BY materia.nombreMateria";
                 return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
             }
                 
