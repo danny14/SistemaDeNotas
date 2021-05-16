@@ -3,7 +3,7 @@
 @using SistemaDeNotas.Data.Model;
 @using SistemaDeNotas.Data.Services;
 
-@inject INotasService NotasService;
+@inject IMatriculaService MatriculaService;
 @inject IEstudianteService EstudianteService;
 @inject NavigationManager NavigationManager;
 @using Microsoft.AspNetCore.Http
@@ -48,14 +48,12 @@
                     <td><input type="text" value="@nota.nota1" size="6" requierd /></td>
                     <td><input type="text" value="@nota.nota2" size="6" required /></td>
                     <td><input type="text" value="@nota.nota3" size="6" required /></td>
-                    <td>
-                        <input type="text" value="@nota.promedioNotas" size="6" disabled /></td>
-
+                    
 
 
 
                     <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @ondblclick="()=> EditarNotas(nota.idNotas)">
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @ondblclick="()=> EditarNotas(nota.idMatricula)">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
                         @*<button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
@@ -94,11 +92,11 @@
         @code {
 
 
-            IEnumerable<notaestudiante> notiviris;
+            IEnumerable<matricula> notiviris;
             protected override async Task OnInitializedAsync()
             {
           
-                notiviris = await NotasService.GetAllNotas();
+                notiviris = await MatriculaService.GetAllNotas();
 
             }
 

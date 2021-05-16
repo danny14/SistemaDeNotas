@@ -23,7 +23,7 @@ namespace SistemaDeNotas.Data.Services
             IEnumerable<ListadoEstudianteProfesor> estudiantes;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT estudiante.nombresEstudiante, estudiante.apellidosEstudiante, materia.nombreMateria FROM estudiante, materia, profesores, notas WHERE notas.idEstudiante = estudiante.idEstudiante AND notas.idMateria = materia.idMateria AND materia.idProfesor = profesores.idProfesor AND profesores.idProfesor = @Id";
+                const string query = "SELECT estudiante.nombresEstudiante, estudiante.apellidosEstudiante, materia.nombreMateria FROM estudiante, materia, profesores, matricula WHERE matricula.idEstudiante = estudiante.idEstudiante AND matricula.idMateria = materia.idMateria AND materia.idProfesor = profesores.idProfesor AND profesores.idProfesor = @Id";
                 estudiantes = await conn.QueryAsync<ListadoEstudianteProfesor>(query, new {  Id = id }, commandType: CommandType.Text);
             }
 

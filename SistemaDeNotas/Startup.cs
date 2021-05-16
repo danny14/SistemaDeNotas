@@ -36,7 +36,7 @@ namespace SistemaDeNotas
             //Se registra la Entidad y Servicios
             services.AddScoped<IEstudianteService, EstudianteService>();
             services.AddScoped<IMateriaService, MateriaService>();
-            services.AddScoped<INotasService, NotasService>();
+            services.AddScoped<IMatriculaService, MatriculaService>();
             services.AddScoped<IProfesoresService, ProfesoresService>();
             services.AddScoped<IGradoService, GradoService>();
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();

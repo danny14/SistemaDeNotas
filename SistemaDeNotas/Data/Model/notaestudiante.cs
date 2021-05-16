@@ -8,7 +8,7 @@ namespace SistemaDeNotas.Data.Model
     public class notaestudiante
     {
         public int idEstudiante { get; set; }
-        public int idNotas { get; set; }
+
         public string NombresEstudiante { get; set; }
 
         public string ApellidosEstudiante { get; set; }
@@ -18,10 +18,10 @@ namespace SistemaDeNotas.Data.Model
 
         public float nota3 { get; set; }
 
-        public float promedioNotas { get; set; }
+        
 
         public Estudiante estudiantito;
-        public Notas noticas;
+
         public Estudiante GetEstudiante()
         {
             estudiantito = new Estudiante();
@@ -30,16 +30,6 @@ namespace SistemaDeNotas.Data.Model
             estudiantito.ApellidosEstudiante = ApellidosEstudiante;
             return estudiantito;
         }
-        public Notas GetNotas()
-        {
-            noticas = new Notas();
-            noticas.idNotas = idNotas;
-            noticas.nota1 = nota1;
-            noticas.nota2 = nota2;
-            noticas.nota3 = nota3;
-            noticas.promedioNotas = promedioNotas;
-            return noticas;
-        }
-        
+     
     }
 }

@@ -15,5 +15,21 @@ namespace SistemaDeNotas.Data.Model
         public int nota1 { get; set; }
         public int nota2 { get; set; }
         public int nota3 { get; set; }
+        public string NombresEstudiante { get; set; }
+
+        public string ApellidosEstudiante { get; set; }
+
+        public Estudiante estudiantito;
+        public Estudiante GetEstudiante()
+        {
+            estudiantito = new Estudiante();
+            estudiantito.idEstudiante = idEstudiante;
+            estudiantito.idEstudiante = idEstudiante;
+            estudiantito.NombresEstudiante = NombresEstudiante;
+            estudiantito.ApellidosEstudiante = ApellidosEstudiante;
+            return estudiantito;
+        }
+
+
     }
 }

@@ -1,20 +1,20 @@
-﻿@page "/NotasEdit/{idNotas:int}"
+﻿@page "/NotasEdit/{idMatricula:int}"
 
 @using SistemaDeNotas.Data
 @using SistemaDeNotas.Data.Model;
 @using SistemaDeNotas.Data.Services;
 
-@inject INotasService NotasService
+@inject IMatriculaService MatriculaService
 @inject NavigationManager NavigationManager
 
 <h3>Editar Notas </h3>
 
 
 <EditForm Model="@nota" OnValidSubmit="@NotasUpdate">
-       
-    
+
+
     <table>
-        
+
         <tr>
             <td>Nota 1:</td>
             <td><input type="text" @bind="nota.nota1" /></td>
@@ -43,15 +43,15 @@
 @code {
 
     [Parameter]
-    public int idNotas { set; get; }
+    public int idMatricula { set; get; }
 
-    Notas nota = new Notas();
+    matricula nota = new matricula();
 
     protected override async Task OnInitializedAsync()
     {
-        if (idNotas > 0)
+        if (idMatricula > 0)
         {
-            nota = await NotasService.GetNotasDetail(idNotas);
+            nota = await MatriculaService.GetNotasDetail(idMatricula);
         }
 
 
@@ -59,7 +59,7 @@
 
     protected async Task NotasUpdate()
     {
-        await NotasService.NotasUpdate(nota);
+        await MatriculaService.NotasUpdate(nota);
 
         NavigationManager.NavigateTo("/");
     }

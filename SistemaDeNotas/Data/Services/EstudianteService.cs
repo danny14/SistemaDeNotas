@@ -95,7 +95,7 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
 
-                const string query = "SELECT notas.nota1, notas.nota2, notas.nota3, notas.promedioNotas, materia.nombreMateria FROM notas , estudiante, materia, periodo WHERE notas.idEstudiante = estudiante.idEstudiante AND notas.idMateria = materia.idMateria AND notas.idPeriodo = periodo.idPeriodo AND estudiante.idEstudiante = @Id";
+                const string query = "SELECT matricula.nota1, matricula.nota2, matricula.nota3, materia.nombreMateria FROM matricula , estudiante, materia, periodo WHERE matricula.idEstudiante = matricula.idEstudiante AND matricula.idMateria = materia.idMateria AND matricula.idPeriodo = periodo.idPeriodo AND estudiante.idEstudiante = @Id";
                 return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { Id = nota }, commandType: CommandType.Text);
             }
         }
@@ -103,12 +103,12 @@ namespace SistemaDeNotas.Data.Services
         /**
          * Obtener el estado del estudiantes que ya finalizaron la materia o que ya la cursaron
         **/
-        public async Task<Notas> GetEstadoFinalizadoEstudiante(int idGrado)
+        public async Task<matricula> GetEstadoFinalizadoEstudiante(int idGrado)
         {
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT estudiante.nombresEstudiante, promedioNotas FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante AND promedioNotas != 0";
-                return await conn.QueryFirstAsync<Notas>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
+                const string query = "SELECT * FROM estudiante";
+                return await conn.QueryFirstAsync<matricula>(query.ToString(), new { idGrado = idGrado }, commandType: CommandType.Text);
             }
 
         }
@@ -122,7 +122,7 @@ namespace SistemaDeNotas.Data.Services
             IEnumerable<Estudiante> estudiantes;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT estudiante.idEstudiante,estudiante.nombresEstudiante,estudiante.apellidosEstudiante, estudiante.direccionEstudiante, estudiante.telefonoEstudiante, correoEstudiante FROM notas, estudiante WHERE notas.idEstudiante = estudiante.idEstudiante AND promedioNotas < 3";
+                const string query = "SELECT * FROM estudiante";
                 estudiantes = await conn.QueryAsync<Estudiante>(query, commandType: CommandType.Text);
             }
             return estudiantes;
@@ -134,7 +134,7 @@ namespace SistemaDeNotas.Data.Services
         public async Task<Estudiante> GetEstudianteByMateria(int idMateria, int idProfesor)
         {
             using (var conn = new SqlConnection(_configuration.Value)) {
-                const string query = "SELECT estudiante.nombresEstudiante,estudiante.apellidosEstudiante, materia.nombreMateria , profesores.nombreProfesor FROM estudiante,grado,materia,profesores WHERE estudiante.idEstudiante = grado.idEstudiante AND materia.idMateria = grado.idMateria AND profesores.idProfesor = materia.idMateria AND materia.idMateria = @idMateria AND profesores.idProfesor = @idProfesor;";
+                const string query = "SELECT * FROM estudiante";
 
                 return await conn.QueryFirstOrDefaultAsync<Estudiante>(query.ToString(), new { idMateria = idMateria, idProfesor = idProfesor }, commandType: CommandType.Text);
             }

@@ -15,11 +15,11 @@ namespace SistemaDeNotas.Data.Model
         public string dia { get; set; }
 
         public TimeSpan horaInicio { get; set; }
-    
+
         public TimeSpan horaFinal { get; set; }
 
         //grado
         public int idMateria { get; set; }
-
+    }
        
 }

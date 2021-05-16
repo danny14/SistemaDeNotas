@@ -3,7 +3,7 @@
 @using SistemaDeNotas.Data.Model
 @using SistemaDeNotas.Data.Services
 
-@inject INotasService NotasService
+@inject IMatriculaService MatriculaService
 @inject NavigationManager NavigationManager
 
 <h1>Adicionar Film</h1>
@@ -12,28 +12,28 @@
     <table>
         <tr>
             <td>Id:</td>
-            <td><input type="text" @bind="nota.idNotas" required /></td>
+         
         </tr>
         <tr>
             <td>Nota 1:</td>
-            <td><input type="number" @bind="nota.nota1" required /></td>
+         
         </tr>
         <tr>
             <td>Nota 2:</td>
-            <td><input type="number" @bind="nota.nota2" /></td>
+          
         </tr>
         <tr>
             <td>Nota 3:</td>
-            <td><input type="number" @bind="nota.nota3" /></td>
+         
         </tr>
 
         <tr>
             <td>Estudiante:</td>
-            <td><input type="text" @bind="nota.idEstudiante" /></td>
+       
         </tr>
         <tr>
             <td>Materia :</td>
-            <td><input type="text" @bind="nota.idMateria" /></td>
+        
         </tr>
         <tr>
             <td colspan="2">
@@ -45,11 +45,11 @@
 </EditForm>
 @code {
 
-    Notas nota = new Notas();
+    matricula nota = new matricula();
 
     protected async Task NotasInsert()
     {
-        await NotasService.NotasInsert(nota);
+        await MatriculaService.NotasInsert(nota);
         NavigationManager.NavigateTo("/");
     }
 

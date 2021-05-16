@@ -26,14 +26,14 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("idEstudiante", grado.idEstudiante, DbType.Int32);
+                
                 parameters.Add("nombreGrado", grado.nombreGrado, DbType.String);
 
 
                 const string query = @"INSERT INTO grado ( idEstudiante, nombreGrado ) 
                 VALUES ( @idEstudiante,  @nombreGrado  )";
 
-                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.nombreGrado }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { grado.nombreGrado }, commandType: CommandType.Text);
             }
 
             return true;
@@ -95,7 +95,7 @@ namespace SistemaDeNotas.Data.Services
 
                 var parameters = new DynamicParameters();
 
-                parameters.Add("idEstudiante", grado.idEstudiante, DbType.Int32);
+                
                 parameters.Add("nombreGrado", grado.nombreGrado, DbType.String);
 
                 const string query = @"UPDATE grado 
@@ -103,7 +103,7 @@ namespace SistemaDeNotas.Data.Services
                                     nombreGrado = @nombreGrado
                                     WHERE idGrado = @idGrado";
 
-                await conn.ExecuteAsync(query, new { grado.idEstudiante, grado.nombreGrado }, commandType: CommandType.Text);
+                await conn.ExecuteAsync(query, new { grado.nombreGrado }, commandType: CommandType.Text);
             }
 
             return true;
