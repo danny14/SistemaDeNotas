@@ -45,12 +45,35 @@ namespace SistemaDeNotas.Data.Services
             return true;
         }
 
+        public async Task<bool> InsertarEstudiante(int idMateria, int idPeriodo)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("idNotas", notas.idNotas, DbType.Int32);//QUITAR EL ID Y LOS QUE NO SE DEBEN DE CAMBIAR
+                parameters.Add("nota1", notas.nota1, DbType.Single);
+                parameters.Add("nota2", notas.nota2, DbType.Single);
+                parameters.Add("nota3", notas.nota3, DbType.Single);
+                parameters.Add("promedioNotas", notas.promedioNotas, DbType.Single);
+                parameters.Add("idEstudiante", notas.idEstudiante, DbType.Int32);
+                parameters.Add("idMateria", notas.idMateria, DbType.Int32);
+                parameters.Add("idPeriodo", notas.idPeriodo, DbType.Int32);
 
+
+                const string query = @"INSERT INTO notas (idNotas, nota1, nota2, nota3) 
+                VALUES ( @idNotas, @nota1, @nota2, @nota3)";
+
+                await conn.ExecuteAsync(query, new { notas.idNotas, notas.nota1, notas.nota2, notas.nota3 },
+                    commandType: CommandType.Text);
+            }
+
+            return true;
+        }
         /**
          * Obtener todas las notas 
         **/
 
-      
+
         public async Task<IEnumerable<notaestudiante>> GetAllNotas()
          {
         IEnumerable<notaestudiante> notas;

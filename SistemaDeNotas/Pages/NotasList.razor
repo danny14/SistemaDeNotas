@@ -39,16 +39,17 @@
                     @foreach (var nota in notiviris)
                     // && estudiantes != null @foreach (var estudiante in estudiantes)
                     {
-                <tr>
+                <tr class="table-warning">
                     @*<td>@estudiante.idEstudiante</td>
          <td>@estudiante.ApellidosEstudiante</td>
         <td>@estudiante.NombresEstudiante</td>*@
                     <td>@nota.idEstudiante</td>
                     <td>@(nota.ApellidosEstudiante + " " + nota.NombresEstudiante)</td>
-                    <td>@nota.nota1</td>
-                    <td>@nota.nota2</td>
-                    <td>@nota.nota3</td>
-                    <td>@nota.promedioNotas</td>
+                    <td><input type="text" value="@nota.nota1" size="6" requierd /></td>
+                    <td><input type="text" value="@nota.nota2" size="6" required /></td>
+                    <td><input type="text" value="@nota.nota3" size="6" required /></td>
+                    <td>
+                        <input type="text" value="@nota.promedioNotas" size="6" disabled /></td>
 
 
 

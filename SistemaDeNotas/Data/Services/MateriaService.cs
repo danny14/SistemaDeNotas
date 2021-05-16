@@ -49,7 +49,7 @@ namespace SistemaDeNotas.Data.Services
             {
                 const string query = @"SELECT materia.idMateria, materia.nombreMateria, profesores.nombreProfesor, profesores.apellidoProfesor, materia.dia, materia.hora
                                         FROM profesores, materia
-                                            WHERE p.idProfesor = m.idMateria";
+                                            WHERE profesores.idProfesor = materia.idMateria";
                 materia = await conn.QueryAsync<profesormateria>(query, commandType: CommandType.Text);
             }
 
