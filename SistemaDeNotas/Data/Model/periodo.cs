@@ -9,5 +9,6 @@ namespace SistemaDeNotas.Data.Model
     {
         public int idPeriodo { get; set; }
         public string nombrePeriodo { get; set; }
+        public int anio { get; set; }
     }
 }

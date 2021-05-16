@@ -9,8 +9,11 @@ namespace SistemaDeNotas.Data.Model
     {
         public int idMatricula { get; set; }
         public int idEstudiante { get; set; }
-        public int idGrado { get; set; }
         public DateTime fechaMatricula { get; set; }
         public int idPeriodo { get; set; }
+        public int idMateria { get; set; }
+        public int nota1 { get; set; }
+        public int nota2 { get; set; }
+        public int nota3 { get; set; }
     }
 }

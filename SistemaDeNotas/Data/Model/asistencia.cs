@@ -8,8 +8,10 @@ namespace SistemaDeNotas.Data.Model
     public class asistencia
     {
         public int idAsistencia { get; set; }
-        public string asistenciaINJ { get; set; }
-        public string asistenciaJUST { get; set; }
-        public int idEstudiante { get; set; }
+       
+        public int asistenciaJUST { get; set; }
+        public DateTime fecha { get; set; }
+        public int idMatricula { get; set; }
+        public string descripcion { get; set; }
     }
 }

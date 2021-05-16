@@ -13,7 +13,7 @@ namespace SistemaDeNotas.Data.Model
         public string nombreMateria { get; set; }
         public string dia { get; set; }
         public  TimeSpan hora { get; set; }
-        public Profesores profe;
+        public int idGrado { get; set; }
 
 
     }
