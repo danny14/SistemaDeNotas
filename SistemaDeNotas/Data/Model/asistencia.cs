@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SistemaDeNotas.Data.Model;
 
 namespace SistemaDeNotas.Data.Model
 {
-    public class asistencia
+    public class Asistencia
     {
         public int idAsistencia { get; set; }
        
@@ -13,5 +14,6 @@ namespace SistemaDeNotas.Data.Model
         public DateTime fecha { get; set; }
         public int idMatricula { get; set; }
         public string descripcion { get; set; }
+
     }
 }

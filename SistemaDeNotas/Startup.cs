@@ -40,7 +40,7 @@ namespace SistemaDeNotas
             services.AddScoped<IProfesoresService, ProfesoresService>();
             services.AddScoped<IGradoService, GradoService>();
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();
-
+            
 
 
             //Conexion a la BD
