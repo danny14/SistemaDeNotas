@@ -5,50 +5,77 @@
 
 @inject IMatriculaService MatriculaService;
 @inject IEstudianteService EstudianteService;
+@inject IPeriodoService PeriodoService;
 @inject NavigationManager NavigationManager;
 @using Microsoft.AspNetCore.Http
 
 
 
 
-        <h1>Lista de Notas</h1>
+<h1>Periodos</h1>
+<select class="form-select" aria-label="Default select example" @onchange="MostrarPeriodo">
+    @if (listaPeriodo != null)
+    {
+        @foreach (var periodo in listaPeriodo)
+        {
+            <option value="@periodo.idPeriodo">@periodo.nombrePeriodo</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example" @onchange="MostrarProfesor">
+    @if (listaProfesor != null)
+    {
+        @foreach (var profesores in listaProfesor)
+        {
+            <option value="@profesores.idProfesor">@(profesores.nombreProfesor + " " + profesores.apellidoProfesor)</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example" @onchange="MostrarMateria">
+    @if (listaMateria != null)
+    {
+        @foreach (var materia in listaMateria)
+        {
+            <option value="@materia.idMateria">@materia.nombreMateria</option>
+        }
+    }
+</select>
+@*<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>
 
-        @*<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>
+    }*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
 
-             }*@
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-  
-                    <th>Estudiante</th>
-                    <th>Nota 1</th>
-                    <th>Nota 2</th>
-                    <th>Nota 3</th>
-                    <th>Promedio de Notas</th>
-                    <th></th>
+            <th>Estudiante</th>
+            <th>Nota 1</th>
+            <th>Nota 2</th>
+            <th>Nota 3</th>
+            <th>Promedio de Notas</th>
+            <th></th>
 
-                </tr>
-            </thead>
-            <tbody>
+        </tr>
+    </thead>
+    <tbody>
 
-                @if (notiviris != null)
-                {
+        @if (notiviris != null)
+        {
 
 
-                    @foreach (var nota in notiviris)
-                    // && estudiantes != null @foreach (var estudiante in estudiantes)
-                    {
+            @foreach (var nota in notiviris)
+            // && estudiantes != null @foreach (var estudiante in estudiantes)
+            {
                 <tr class="table-warning">
                     @*<td>@estudiante.idEstudiante</td>
-         <td>@estudiante.ApellidosEstudiante</td>
-        <td>@estudiante.NombresEstudiante</td>*@
+                         <td>@estudiante.ApellidosEstudiante</td>
+                        <td>@estudiante.NombresEstudiante</td>*@
                     <td>@nota.idEstudiante</td>
                     <td>@(nota.ApellidosEstudiante + " " + nota.NombresEstudiante)</td>
                     <td><input type="text" value="@nota.nota1" size="6" requierd /></td>
                     <td><input type="text" value="@nota.nota2" size="6" required /></td>
                     <td><input type="text" value="@nota.nota3" size="6" required /></td>
-                    
+
 
 
 
@@ -57,12 +84,12 @@
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
                         @*<button type="button" class="btn btn-default" aria-label="Left Align" title="Delete" @onclick="()=> DeleteNotas(nota.idNotas)">
-                    <span class="oi oi-trash" aria-hidden="true"></span>
-                </button>
+                                    <span class="oi oi-trash" aria-hidden="true"></span>
+                                </button>
 
 
 
-            <input type="text" name="nota1" value="@nota.nota1" size="6" required />
+                            <input type="text" name="nota1" value="@nota.nota1" size="6" required />
 
 
 
@@ -70,53 +97,69 @@
 
 
 
-            <td>@nota.idNotas</td>
-            <td>@nota.nota1</td>
-            <td>@nota.nota2</td>
-            <td>@nota.nota3</td>
-            <td>@nota.promedioNotas</td>
-            <td>@nota.idMateria</td>
-            <td>@nota.idPeriodo</td>*@
+                            <td>@nota.idNotas</td>
+                            <td>@nota.nota1</td>
+                            <td>@nota.nota2</td>
+                            <td>@nota.nota3</td>
+                            <td>@nota.promedioNotas</td>
+                            <td>@nota.idMateria</td>
+                            <td>@nota.idPeriodo</td>*@
 
                     </td>
                 </tr>
-                        }
-
-                }
-
-            </tbody>
-        </table>
-
-
-
-        @code {
-
-
-            IEnumerable<matricula> notiviris;
-            protected override async Task OnInitializedAsync()
-            {
-          
-                notiviris = await MatriculaService.GetAllNotas();
-
             }
-
-
-
-
-            void EditarNotas(int id)
-            {
-                NavigationManager.NavigateTo("/NotasList " + id);
-            }
-
-            /* protected async Task DeleteNotas(int id)
-             {
-
-                 await NotasService.NotasDelete(id);
-                 NavigationManager.NavigateTo("/");
-
-             }*/
 
         }
+
+    </tbody>
+</table>
+
+
+
+@code {
+
+
+    IEnumerable<matricula> notiviris;
+    IEnumerable<periodo> listaPeriodo;
+    IEnumerable<Profesores> listaProfesor;
+    IEnumerable<Materia> listaMateria;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        notiviris = await MatriculaService.GetAllNotas();
+
+    }
+
+
+
+
+    void EditarNotas(int id)
+    {
+        NavigationManager.NavigateTo("/NotasList " + id);
+    }
+
+    /* protected async Task DeleteNotas(int id)
+     {
+
+         await NotasService.NotasDelete(id);
+         NavigationManager.NavigateTo("/");
+
+     }*/
+
+    async Task MostrarPeriodo(ChangeEventArgs args)
+    {
+
+    }
+    async Task MostrarProfesor(ChangeEventArgs args)
+    {
+
+    }
+    async Task MostrarMateria(ChangeEventArgs args)
+    {
+
+    }
+}
 
 
 
