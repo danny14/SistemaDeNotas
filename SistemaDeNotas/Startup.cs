@@ -40,6 +40,7 @@ namespace SistemaDeNotas
             services.AddScoped<IProfesoresService, ProfesoresService>();
             services.AddScoped<IGradoService, GradoService>();
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();
+            services.AddScoped<IPeriodoService, PeriodoService>();
 
 
 

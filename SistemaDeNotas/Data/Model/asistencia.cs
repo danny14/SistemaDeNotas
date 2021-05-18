@@ -13,5 +13,6 @@ namespace SistemaDeNotas.Data.Model
         public DateTime fecha { get; set; }
         public int idMatricula { get; set; }
         public string descripcion { get; set; }
+        
     }
 }
