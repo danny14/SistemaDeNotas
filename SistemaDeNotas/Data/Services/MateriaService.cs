@@ -42,15 +42,13 @@ namespace SistemaDeNotas.Data.Services
         /**
          * Obtener todos los estudiantes 
         **/
-        public async Task<IEnumerable<profesormateria>> GetAllMaterias()
+        public async Task<IEnumerable<Materia>> GetAllMaterias()
         {
-            IEnumerable<profesormateria> materia;
+            IEnumerable<Materia> materia;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = @"SELECT materia.idMateria, materia.nombreMateria, profesores.nombreProfesor, profesores.apellidoProfesor, materia.dia, materia.hora
-                                        FROM profesores, materia
-                                            WHERE profesores.idProfesor = materia.idMateria";
-                materia = await conn.QueryAsync<profesormateria>(query, commandType: CommandType.Text);
+                const string query = @"SELECT * FROM materia";
+                materia = await conn.QueryAsync<Materia>(query, commandType: CommandType.Text);
             }
 
             return materia;
@@ -112,6 +110,19 @@ namespace SistemaDeNotas.Data.Services
         Task<Materia> IMateriaService.GetMateriaDetail(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Materia>> GetMateriaGrado(int id)
+        {
+                IEnumerable<Materia> materia;
+                using (var conn = new SqlConnection(_configuration.Value))
+                {
+                    const string query = @"SELECT * FROM materia WHERE idGrado = @Id";
+                    materia = await conn.QueryAsync<Materia>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
+                }
+
+                return materia;
+           
         }
     }
 }

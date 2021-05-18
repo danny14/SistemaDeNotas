@@ -28,7 +28,7 @@
         <tr>
             <td>@materia.idMateria</td>
             <td>@materia.nombreMateria</td>
-            <td>@(materia.nombreProfesor + " " + materia.apellidoProfesor)</td>
+           
             <td>@materia.dia</td>
             <td>@materia.hora</td>
             <td>
@@ -51,7 +51,7 @@
 @code {
 
 
-    IEnumerable<profesormateria> martuchis;
+    IEnumerable<Materia> martuchis;
     protected override async Task OnInitializedAsync()
     {
         martuchis = await MateriaService.GetAllMaterias();

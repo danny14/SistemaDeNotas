@@ -6,14 +6,15 @@
 @inject IMatriculaService MatriculaService;
 @inject IEstudianteService EstudianteService;
 @inject IPeriodoService PeriodoService;
+@inject IProfesoresService ProfesoresService;
+@inject IMateriaService MateriaService;
+@inject IGradoService GradoService;
 @inject NavigationManager NavigationManager;
 @using Microsoft.AspNetCore.Http
 
 
-
-
 <h1>Periodos</h1>
-<select class="form-select" aria-label="Default select example" @onchange="MostrarPeriodo">
+<select class="form-select" aria-label="Default select example">
     @if (listaPeriodo != null)
     {
         @foreach (var periodo in listaPeriodo)
@@ -22,7 +23,7 @@
         }
     }
 </select>
-<select class="form-select" aria-label="Default select example" @onchange="MostrarProfesor">
+<select class="form-select" aria-label="Default select example">
     @if (listaProfesor != null)
     {
         @foreach (var profesores in listaProfesor)
@@ -31,7 +32,16 @@
         }
     }
 </select>
-<select class="form-select" aria-label="Default select example" @onchange="MostrarMateria">
+<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+    @if (listaGrado != null)
+    {
+        @foreach (var grado in listaGrado)
+        {
+            <option value="@grado.idGrado">@grado.nombreGrado</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example">
     @if (listaMateria != null)
     {
         @foreach (var materia in listaMateria)
@@ -39,6 +49,11 @@
             <option value="@materia.idMateria">@materia.nombreMateria</option>
         }
     }
+            else
+            {
+                <option value="0">Seleccione Grado</option>
+                
+            }
 </select>
 @*<a class="btn btn-success" href="NotasAdd">Nuevo Notas</a>
 
@@ -123,11 +138,16 @@
     IEnumerable<periodo> listaPeriodo;
     IEnumerable<Profesores> listaProfesor;
     IEnumerable<Materia> listaMateria;
+    IEnumerable<Grado> listaGrado;
 
     protected override async Task OnInitializedAsync()
     {
 
         notiviris = await MatriculaService.GetAllNotas();
+        listaPeriodo = await PeriodoService.GetAllPeriodo();
+        listaProfesor = await ProfesoresService.GetAllProfesor();
+        listaGrado = await GradoService.GetAllGrados();
+
 
     }
 
@@ -139,26 +159,14 @@
         NavigationManager.NavigateTo("/NotasList " + id);
     }
 
-    /* protected async Task DeleteNotas(int id)
-     {
 
-         await NotasService.NotasDelete(id);
-         NavigationManager.NavigateTo("/");
 
-     }*/
-
-    async Task MostrarPeriodo(ChangeEventArgs args)
+    async Task ListarMateria(ChangeEventArgs args)
     {
-
+        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
     }
-    async Task MostrarProfesor(ChangeEventArgs args)
-    {
 
-    }
-    async Task MostrarMateria(ChangeEventArgs args)
-    {
 
-    }
 }
 
 
