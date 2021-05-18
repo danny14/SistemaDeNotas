@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace SistemaDeNotas.Data.Services
 {
-    public class AsistenciaService
+    public class AsistenciaService : IAsistenciaService
     {
         private readonly SqlConnectionConfiguration _configuration;
 
@@ -21,8 +21,9 @@ namespace SistemaDeNotas.Data.Services
         }
 
 
-        public async Task<bool> AsistenciaInsert(Asistencia asistencia) {
-            using ( var conn = new SqlConnection(_configuration.Value)) 
+        public async Task<bool> AsistenciaInsert(Asistencia asistencia)
+        {
+            using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("asistenciaJUST", asistencia.asistenciaJUST, DbType.Int32);
@@ -35,7 +36,7 @@ namespace SistemaDeNotas.Data.Services
 
                 await conn.ExecuteAsync(query, new { asistencia.asistenciaJUST, asistencia.fecha }, commandType: CommandType.Text);
             }
-                return true;
+            return true;
         }
 
         public async Task<IEnumerable<Asistencia>> GetAllAsistencia()
@@ -95,5 +96,7 @@ namespace SistemaDeNotas.Data.Services
 
             return true;
         }
+
+
     }
 }
