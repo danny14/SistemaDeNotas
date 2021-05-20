@@ -26,14 +26,13 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("idEstudiante", estudiante.idEstudiante, DbType.Int32);
                 parameters.Add("nombresEstudiante", estudiante.NombresEstudiante, DbType.String);
                 parameters.Add("apellidosEstudiante", estudiante.ApellidosEstudiante, DbType.String);
                 parameters.Add("direccionEstudiante", estudiante.DireccionEstudiante, DbType.String);
                 parameters.Add("telefonoEstudiante", estudiante.TelefonoEstudiante, DbType.String);
                 parameters.Add("correoEstudiante", estudiante.CorreoEstudiante, DbType.String);
 
-                const string query = @"INSERT INTO estudiante (idEstudiante, NombresEstudiante, ApellidosEstudiante, DireccionEstudiante, TelefonoEstudiante, CorreoEstudiante) 
+                const string query = @"INSERT INTO estudiante ( NombresEstudiante, ApellidosEstudiante, DireccionEstudiante, TelefonoEstudiante, CorreoEstudiante) 
                 VALUES (@IdEstudiante, @nombresEstudiante, @apellidosEstudiante,@direccionEstudiante,@telefonoEstudiante,@correoEstudiante)";
 
                 await conn.ExecuteAsync(query, new { estudiante.idEstudiante, estudiante.NombresEstudiante, estudiante.ApellidosEstudiante, estudiante.DireccionEstudiante, estudiante.TelefonoEstudiante, estudiante.CorreoEstudiante }, commandType: CommandType.Text);

@@ -1,0 +1,33 @@
+﻿@page "/AsistenciaList";
+@using SistemaDeNotas.Data
+@using SistemaDeNotas.Data.Model;
+@using SistemaDeNotas.Data.Services;
+
+@inject IAsistenciaService AsistenciaService;
+@inject IMatriculaService MatriculaService;
+@inject IEstudianteService EstudianteService;
+
+@inject NavigationManager NavigationManager;
+
+<h3>Lista de Asistencias</h3>
+<select class="custom-select" aria-label="Default select example" @onchange="mostrarEstudiante()">
+
+</select>
+
+@code {
+
+    IEnumerable<matricula> matriculas;
+    IEnumerable<Estudiante> Estudiantes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        matriculas = await MatriculaService.GetAllNotas();
+        periodos = await PeriodoService.GetAllPeriodo();
+    }
+
+    async Task mostrarMatricula(ChangeEventArgs args)
+    {
+        estudiantes = await EstudianteService.GetAllEstudiantes();
+    }
+
+}

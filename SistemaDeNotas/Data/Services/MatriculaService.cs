@@ -25,7 +25,11 @@ namespace SistemaDeNotas.Data.Services
             using (var conn = new SqlConnection(_configuration.Value))
             {
                 var parameters = new DynamicParameters();
-               
+                parameters.Add("idEstudiante", notas.idEstudiante, DbType.Int32);
+                parameters.Add("nota1", notas.nota1, DbType.Int32);
+                parameters.Add("nota1", notas.nota1, DbType.Int32);
+                parameters.Add("nota2", notas.nota2, DbType.Int32);
+                parameters.Add("nota3", notas.nota3, DbType.Int32);
 
 
                 const string query = @"INSERT INTO matricula (idMatricula, nota1, nota2, nota3) 
