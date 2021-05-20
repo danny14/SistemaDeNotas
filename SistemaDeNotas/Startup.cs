@@ -41,6 +41,7 @@ namespace SistemaDeNotas
             services.AddScoped<IGradoService, GradoService>();
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();
             services.AddScoped<IPeriodoService, PeriodoService>();
+            services.AddScoped<IHorarioService, HorarioService>();
 
 
 

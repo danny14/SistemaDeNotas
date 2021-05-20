@@ -29,8 +29,18 @@ namespace SistemaDeNotas.Data.Model
         public string nombrePeriodo { get; set; }
         public int anio { get; set; }
 
+        //materia
+
+
+        public string nombreMateria { get; set; }
+        public string diaMateria { get; set; }
+        public TimeSpan hora { get; set; }
+        public int idGrado { get; set; }
+
+
         public Profesores profe;
         public periodo periodo;
+        public Materia materia;
 
         public Profesores GetProfesores()
         {
@@ -47,6 +57,16 @@ namespace SistemaDeNotas.Data.Model
             periodo.nombrePeriodo = nombrePeriodo;
             periodo.anio = anio;
             return periodo;
+        }
+        public Materia GetMateria()
+        {
+            materia = new Materia();
+            materia.idMateria = idMateria;
+            materia.nombreMateria = nombreMateria;
+            materia.diaMateria = diaMateria;
+            materia.hora = hora;
+            materia.idGrado = idGrado;
+            return materia;
         }
     }
        

@@ -15,7 +15,7 @@ namespace SistemaDeNotas.Data.Model
         
 
         public string nombreMateria { get; set; }
-        public string dia { get; set; }
+        public string diaMateria { get; set; }
         public TimeSpan hora { get; set; }
 
 
@@ -35,7 +35,7 @@ namespace SistemaDeNotas.Data.Model
             mate = new Materia();
             mate.idMateria = idMateria;
             mate.nombreMateria = nombreMateria;
-            mate.dia = dia;
+            mate.diaMateria = diaMateria;
             mate.hora = hora;
             return mate;
     }
