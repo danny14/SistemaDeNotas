@@ -172,22 +172,7 @@ public async Task<bool> NotasUpdate(matricula notas)
 
             var result = await db.ExecuteAsync(sql.ToString(), new { });
             return result > 0;
-            //using (var conn = new SqlConnection(_configuration.Value))
-            //{
 
-            //var parameters = new DynamicParameters();
-            //parameters.Add("idNotas", notas.idNotas, DbType.Int32);
-            //parameters.Add("nota1", notas.nota1, DbType.Single);
-            //parameters.Add("nota2", notas.nota2, DbType.Single);
-            //parameters.Add("nota3", notas.nota3, DbType.Single);
-            // parameters.Add("promedioNotas", notas.promedioNotas, DbType.Single);
-            //parameters.Add("idEstudiante", notas.idEstudiante, DbType.Int32);
-            //  parameters.Add("idMateria", notas.idMateria, DbType.Int32);
-
-
-            //}
-
-            // return true;
             }
 
         }

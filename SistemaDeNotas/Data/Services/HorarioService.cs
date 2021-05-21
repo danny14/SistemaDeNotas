@@ -17,7 +17,7 @@ namespace SistemaDeNotas.Data.Services
         {
             _configuration = configuration;
         }
-        public async Task<IEnumerable<horario>> GetHorario()
+        public async Task<IEnumerable<horario>> GetHorario(int id)
         {
             IEnumerable<horario> horario;
             using (var conn = new SqlConnection(_configuration.Value))

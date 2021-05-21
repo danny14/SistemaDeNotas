@@ -28,5 +28,17 @@ namespace SistemaDeNotas.Data.Services
 
             return listaPeriodo;
         }
+        public async Task<IEnumerable<periodo>> GetPeriodoGrado(int id)
+        {
+            IEnumerable<periodo> periodo;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = @"SELECT * FROM periodo WHERE idGrado = @Id";
+                periodo = await conn.QueryAsync<periodo>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
+            }
+
+            return periodo;
+
+        }
     }
 }

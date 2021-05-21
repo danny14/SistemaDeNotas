@@ -26,7 +26,7 @@ namespace SistemaDeNotas.Data.PDF
         {
             _env = env;
         }
-        public Task GeneraFactura(Materia hora, IEnumerable<horario> horarios)
+        public Task GeneraFactura(IEnumerable<horario> horarios)
         {
             string destination = "wwwroot/FilePdf/FacturaSystem.pdf";
             FileInfo file = new FileInfo(destination);
@@ -39,9 +39,8 @@ namespace SistemaDeNotas.Data.PDF
             //Escribiendo en el Documento
             using (Document document = new Document(pdfdoc))
             {
-                document.Add(new Paragraph("FACTURA DE VENTA No:" + hora.idMateria));
-                document.Add(new Paragraph("Identificación del Cliente:" + hora.nombreMateria));
-            
+                document.Add(new Paragraph("FACTURA DE VENTA No:"));
+                document.Add(new Paragraph("Identificación del Cliente:"));
                 document.Add(new Paragraph(" "));
                 document.Add(new Paragraph(" DETALLE DE LA FACTURA "));
                 float[] columnWidths = new float[] { 70f, 200f, 70f, 70f };
@@ -68,13 +67,12 @@ namespace SistemaDeNotas.Data.PDF
                 table.AddCell(cell);
                 document.Add(table);
 
-                foreach (var aptDetalle in horarios)
+                foreach (var horario in horarios)
                 {
                     table = new Table(columnWidths);
-                    table.AddCell(aptDetalle.idHorario.ToString());
-                    table.AddCell(aptDetalle.dia);
-                    ;
-                    document.Add(table);
+                    table.AddCell(horario.idHorario.ToString());
+                    table.AddCell(horario.dia);
+                   document.Add(table);
                 }
 
                 document.Close();

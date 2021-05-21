@@ -7,6 +7,6 @@ namespace SistemaDeNotas.Data.Services
     public interface IPeriodoService
     {
         Task<IEnumerable<periodo>> GetAllPeriodo();
-    
+        Task<IEnumerable<periodo>> GetPeriodoGrado(int id);
     }
 }

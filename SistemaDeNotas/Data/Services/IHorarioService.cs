@@ -11,6 +11,6 @@ namespace SistemaDeNotas.Data.Services
 {
     interface IHorarioService
     {
-        Task<IEnumerable<horario>> GetHorario();
+        Task<IEnumerable<horario>> GetHorario(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿@page "/Horario"
 @using SistemaDeNotas.Data
 @using SistemaDeNotas.Data.Model
+
 @using SistemaDeNotas.Data.Services
 @using SistemaDeNotas.Data.PDF
 
@@ -10,11 +11,15 @@
 @inject IMateriaService MateriaService;
 @inject IGradoService GradoService;
 @inject IHorarioPDF HorarioPDF;
+@inject IHorarioService HorarioService;
 @inject NavigationManager NavigationManager;
+
 @using Microsoft.AspNetCore.Http
 
 <h1>HORARIO</h1>
-<select class="form-select" aria-label="Default select example">
+
+
+<select class="form-select" aria-label="Default select example" @onchange="listarPeriodo">
     @if (listaPeriodo != null)
     {
         @foreach (var periodo in listaPeriodo)
@@ -24,7 +29,7 @@
     }
 </select>
 
-<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+<select class="form-select" aria-label="Default select example">
     @if (listaGrado != null)
     {
         @foreach (var grado in listaGrado)
@@ -33,23 +38,67 @@
         }
     }
 </select>
-<select class="form-select" aria-label="Default select example">
-    @if (listaMateria != null)
-    {
-        @foreach (var materia in listaMateria)
-        {
-            <option value="@materia.idMateria">@materia.nombreMateria</option>
-        }
-    }
-    else
-    {
-        <option value="0">Seleccione Grado</option>
-
-    }
-</select>
 <td>
-    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+    <button class="btn btn-primary" @onclick="GeneraFactura">Imprimir horario</button>
 </td>
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+
+            <th>idmateria</th>
+            <th>periodo</th>
+            <th>profe</th>
+            <th>dia</th>
+            <th>horai</th>
+            <th>horafi</th>
+            <th>materia</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (horarios != null)
+        {
+
+
+            @foreach (var nota in horarios)
+
+            {
+        <tr class="table-warning">
+
+            <td>@nota.idHorario</td>
+            <td>@nota.idPeriodo</td>
+            <td>@nota.idProfesor</td>
+            <td>@nota.dia</td>
+            <td>@nota.horaInicio</td>
+            <td>@nota.horaFinal</td>
+            <td>@nota.idMateria</td>
+
+
+
+
+
+
+        </tr>
+            }
+
+        }
+
+    </tbody>
+</table>
+
+
+
+
+
+
 
 @code {
 
@@ -60,10 +109,8 @@
     IEnumerable<Materia> listaMateria;
     IEnumerable<Grado> listaGrado;
     IEnumerable<horario> horarios;
-    public Materia hora;
-
-    public int numFactura = 0;
-
+    public horario hora;
+    public int pdf = 1;
     protected override async Task OnInitializedAsync()
     {
 
@@ -71,12 +118,9 @@
         listaPeriodo = await PeriodoService.GetAllPeriodo();
 
         listaGrado = await GradoService.GetAllGrados();
-
+        horarios = await HorarioService.GetHorario(1);
 
     }
-
-
-
 
     void EditarNotas(int id)
     {
@@ -85,17 +129,17 @@
 
 
 
-    async Task ListarMateria(ChangeEventArgs args)
+    async Task listarPeriodo(ChangeEventArgs args)
     {
-        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
+        listaPeriodo = await PeriodoService.GetPeriodoGrado(Convert.ToInt32(args.Value));
     }
 
-    async Task GeneraPDF()
+    async Task GeneraFactura()
     {
-        if (numFactura > 0)
+        if (pdf > 0)
         {
 
-            await HorarioPDF.GeneraFactura(hora, horarios);
+            await HorarioPDF.GeneraFactura(horarios);
         }
     }
 
@@ -113,7 +157,7 @@
             {
                 if (numFactura > 0)
                 {
-                    factura = await FacturaService.FacturaSelect(numFactura);
+                    notiviris = await FacturaService.FacturaSelect(numFactura);
                     cliente = await ClienteService.ClienteSelect(factura.ClienteFactura);
                     detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
                     await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);

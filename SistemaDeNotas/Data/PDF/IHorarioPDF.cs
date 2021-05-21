@@ -7,7 +7,7 @@ namespace SistemaDeNotas.Data.PDF
 {
     public interface IHorarioPDF
     {
+        Task GeneraFactura(IEnumerable<horario> horarios);
         FileResult descargarPDF();
-        Task GeneraFactura(Materia hora, IEnumerable<horario> horarios);
     }
 }
