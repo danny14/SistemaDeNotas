@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SistemaDeNotas.Data.PDF
 {
-    interface IHorarioPDF
+    interface INotasPDF
     {
-        Task GeneraFactura(IEnumerable<horario> horarios);
         FileResult descargarPDF();
+        Task GeneraFactura(horario horario, IEnumerable<horario> horarios);
     }
 }

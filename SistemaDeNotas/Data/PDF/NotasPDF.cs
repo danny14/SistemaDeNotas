@@ -18,15 +18,15 @@ using iText.Layout.Properties;
 
 namespace SistemaDeNotas.Data.PDF
 {
-    public class HorarioPDF : PageModel, IHorarioPDF
+    public class NotasPDF : PageModel, INotasPDF
     {
         private readonly IWebHostEnvironment _env;
 
-        public HorarioPDF(IWebHostEnvironment env)
+        public NotasPDF(IWebHostEnvironment env)
         {
             _env = env;
         }
-        public Task GeneraFactura(IEnumerable<horario> horarios)
+        public async Task GeneraFactura(horario horario, IEnumerable<horario> horarios)
         {
             string destination = "wwwroot/FilePdf/FacturaSystem.pdf";
             FileInfo file = new FileInfo(destination);
@@ -39,8 +39,8 @@ namespace SistemaDeNotas.Data.PDF
             //Escribiendo en el Documento
             using (Document document = new Document(pdfdoc))
             {
-                document.Add(new Paragraph("FACTURA DE VENTA No:" + hora.idMateria));
-                document.Add(new Paragraph("Identificación del Cliente:" + hora.nombreMateria));
+                document.Add(new Paragraph("FACTURA DE VENTA No:" + horario.idHorario));
+                document.Add(new Paragraph("Identificación del Cliente:" + horario.hora));
             
                 document.Add(new Paragraph(" "));
                 document.Add(new Paragraph(" DETALLE DE LA FACTURA "));
@@ -68,12 +68,13 @@ namespace SistemaDeNotas.Data.PDF
                 table.AddCell(cell);
                 document.Add(table);
 
-                foreach (var horario in horarios)
+                foreach (var aptDetalle in horarios)
                 {
                     table = new Table(columnWidths);
-                    table.AddCell(horario.idHorario.ToString());
-                    table.AddCell(horario.dia);
-                   document.Add(table);
+                    table.AddCell(aptDetalle.idHorario.ToString());
+                    table.AddCell(aptDetalle.dia);
+                    ;
+                    document.Add(table);
                 }
 
                 document.Close();

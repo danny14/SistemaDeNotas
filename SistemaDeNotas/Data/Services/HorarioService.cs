@@ -22,7 +22,7 @@ namespace SistemaDeNotas.Data.Services
             IEnumerable<horario> horario;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT * FROM horario";
+                const string query = "SELECT * FROM estudiante";
                 horario = await conn.QueryAsync<horario>(query, commandType: CommandType.Text);
             }
 

@@ -3,7 +3,6 @@
 @using SistemaDeNotas.Data.Model
 
 @using SistemaDeNotas.Data.Services
-@using SistemaDeNotas.Data.PDF
 
 @inject IMatriculaService MatriculaService;
 @inject IEstudianteService EstudianteService;
@@ -17,9 +16,7 @@
 @using Microsoft.AspNetCore.Http
 
 <h1>HORARIO</h1>
-
-
-<select class="form-select" aria-label="Default select example" @onchange="listarPeriodo">
+<select class="form-select" aria-label="Default select example">
     @if (listaPeriodo != null)
     {
         @foreach (var periodo in listaPeriodo)
@@ -29,7 +26,7 @@
     }
 </select>
 
-<select class="form-select" aria-label="Default select example">
+<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
     @if (listaGrado != null)
     {
         @foreach (var grado in listaGrado)
@@ -38,67 +35,23 @@
         }
     }
 </select>
-<td>
-    <button class="btn btn-primary" @onclick="GeneraFactura">Imprimir horario</button>
-</td>
-
-
-
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-
-            <th>idmateria</th>
-            <th>periodo</th>
-            <th>profe</th>
-            <th>dia</th>
-            <th>horai</th>
-            <th>horafi</th>
-            <th>materia</th>
-
-
-        </tr>
-    </thead>
-    <tbody>
-
-        @if (horarios != null)
+<select class="form-select" aria-label="Default select example">
+    @if (listaMateria != null)
+    {
+        @foreach (var materia in listaMateria)
         {
-
-
-            @foreach (var nota in horarios)
-
-            {
-        <tr class="table-warning">
-
-            <td>@nota.idHorario</td>
-            <td>@nota.idPeriodo</td>
-            <td>@nota.idProfesor</td>
-            <td>@nota.dia</td>
-            <td>@nota.horaInicio</td>
-            <td>@nota.horaFinal</td>
-            <td>@nota.idMateria</td>
-
-
-
-
-
-
-        </tr>
-            }
-
+            <option value="@materia.idMateria">@materia.nombreMateria</option>
         }
+    }
+    else
+    {
+        <option value="0">Seleccione Grado</option>
 
-    </tbody>
-</table>
-
-
-
-
-
-
+    }
+</select>
+<td>
+    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+</td>
 
 @code {
 
@@ -109,8 +62,10 @@
     IEnumerable<Materia> listaMateria;
     IEnumerable<Grado> listaGrado;
     IEnumerable<horario> horarios;
-    public horario hora;
-    public int pdf = 1;
+    public Materia hora;
+
+    public int numFactura = 0;
+
     protected override async Task OnInitializedAsync()
     {
 
@@ -118,9 +73,12 @@
         listaPeriodo = await PeriodoService.GetAllPeriodo();
 
         listaGrado = await GradoService.GetAllGrados();
-        horarios = await HorarioService.GetHorario(1);
+
 
     }
+
+
+
 
     void EditarNotas(int id)
     {
@@ -129,17 +87,17 @@
 
 
 
-    async Task listarPeriodo(ChangeEventArgs args)
+    async Task ListarMateria(ChangeEventArgs args)
     {
-        listaPeriodo = await PeriodoService.GetPeriodoGrado(Convert.ToInt32(args.Value));
+        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
     }
 
-    async Task GeneraFactura()
+    async Task GeneraPDF()
     {
-        if (pdf > 0)
+        if (numFactura > 0)
         {
 
-            await HorarioPDF.GeneraFactura(horarios);
+            await HorarioPDF.GeneraFactura(hora, horarios);
         }
     }
 
@@ -162,27 +120,5 @@
                     detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
                     await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);
                 }
-            }
-
-
-
-
-
-
-        <td>
-        <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
-    </td>
-        async Task GeneraPDF()
-        {
-            if (numFactura > 0)
-            {
-
-                await HorarioServicePDF.GeneraFactura(hora, horarios);
-            }
-        }
-
-
-
-
-
-*@
+            }*@
+}
