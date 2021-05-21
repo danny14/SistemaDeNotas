@@ -6,12 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaDeNotas.Data;
+using SistemaDeNotas.Data.PDF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SistemaDeNotas.Data.Services;
-using Syncfusion.Blazor;
+
 
 namespace SistemaDeNotas
 {
@@ -28,7 +29,7 @@ namespace SistemaDeNotas
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSyncfusionBlazor();
+         
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
@@ -42,6 +43,11 @@ namespace SistemaDeNotas
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();
             services.AddScoped<IPeriodoService, PeriodoService>();
             services.AddScoped<IHorarioService, HorarioService>();
+            services.AddScoped<INotasPDF, NotasPDF>();
+
+
+
+
 
 
 

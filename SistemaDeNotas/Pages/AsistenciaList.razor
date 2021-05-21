@@ -4,30 +4,94 @@
 @using SistemaDeNotas.Data.Services;
 
 @inject IAsistenciaService AsistenciaService;
-@inject IMatriculaService MatriculaService;
 @inject IEstudianteService EstudianteService;
-
+@inject IPeriodoService PeriodoService;
+@inject IProfesoresService ProfesoresService;
+@inject IMateriaService MateriaService;
+@inject IGradoService GradoService;
 @inject NavigationManager NavigationManager;
+@using Microsoft.AspNetCore.Http
 
-<h3>Lista de Asistencias</h3>
-<select class="custom-select" aria-label="Default select example" @onchange="mostrarEstudiante()">
 
+<h1>Notas</h1>
+<select class="form-select" aria-label="Default select example">
+    @if (listaPeriodo != null)
+    {
+        @foreach (var periodo in listaPeriodo)
+        {
+            <option value="@periodo.idPeriodo">@periodo.nombrePeriodo</option>
+        }
+    }
 </select>
+<select class="form-select" aria-label="Default select example">
+    @if (listaProfesor != null)
+    {
+        @foreach (var profesores in listaProfesor)
+        {
+            <option value="@profesores.idProfesor">@(profesores.nombreProfesor + " " + profesores.apellidoProfesor)</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+    @if (listaGrado != null)
+    {
+        @foreach (var grado in listaGrado)
+        {
+            <option value="@grado.idGrado">@grado.nombreGrado</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example">
+    @if (listaMateria != null)
+    {
+        @foreach (var materia in listaMateria)
+        {
+            <option value="@materia.idMateria">@materia.nombreMateria</option>
+        }
+    }
+    else
+    {
+        <option value="0">Seleccione Grado</option>
+
+    }
+</select>
+
+
 
 @code {
 
-    IEnumerable<matricula> matriculas;
-    IEnumerable<Estudiante> Estudiantes;
+
+    IEnumerable<Asistencia> listaAsistencia;
+    IEnumerable<periodo> listaPeriodo;
+    IEnumerable<Profesores> listaProfesor;
+    IEnumerable<Materia> listaMateria;
+    IEnumerable<Grado> listaGrado;
 
     protected override async Task OnInitializedAsync()
     {
-        matriculas = await MatriculaService.GetAllNotas();
-        periodos = await PeriodoService.GetAllPeriodo();
+
+        listaAsistencia = await AsistenciaService.GetAllAsistencia(); ;
+        listaPeriodo = await PeriodoService.GetAllPeriodo();
+        listaProfesor = await ProfesoresService.GetAllProfesor();
+        listaGrado = await GradoService.GetAllGrados();
+
+
     }
 
-    async Task mostrarMatricula(ChangeEventArgs args)
+
+
+
+    void EditarNotas(int id)
     {
-        estudiantes = await EstudianteService.GetAllEstudiantes();
+        NavigationManager.NavigateTo("/NotasList " + id);
     }
+
+
+
+    async Task ListarMateria(ChangeEventArgs args)
+    {
+        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
+    }
+
 
 }

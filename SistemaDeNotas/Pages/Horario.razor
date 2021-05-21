@@ -9,6 +9,25 @@
 
 <h1>Horario</h1>
 
-                Welcome to your new app.
+
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    @*<td>
+            <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+        </td>
+
+
+
+                async Task GeneraPDF()
+            {
+                if (numFactura > 0)
+                {
+                    factura = await FacturaService.FacturaSelect(numFactura);
+                    cliente = await ClienteService.ClienteSelect(factura.ClienteFactura);
+                    detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
+                    await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);
+                }
+            }*@
+}
