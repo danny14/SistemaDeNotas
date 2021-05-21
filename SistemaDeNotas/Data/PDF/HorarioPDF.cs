@@ -26,7 +26,7 @@ namespace SistemaDeNotas.Data.PDF
         {
             _env = env;
         }
-        public async Task GeneraFactura(horario horario, IEnumerable<horario> horarios)
+        public Task GeneraFactura(Materia hora, IEnumerable<horario> horarios)
         {
             string destination = "wwwroot/FilePdf/FacturaSystem.pdf";
             FileInfo file = new FileInfo(destination);
@@ -39,8 +39,8 @@ namespace SistemaDeNotas.Data.PDF
             //Escribiendo en el Documento
             using (Document document = new Document(pdfdoc))
             {
-                document.Add(new Paragraph("FACTURA DE VENTA No:" + horario.idHorario));
-                document.Add(new Paragraph("Identificación del Cliente:" + horario.hora));
+                document.Add(new Paragraph("FACTURA DE VENTA No:" + hora.idMateria));
+                document.Add(new Paragraph("Identificación del Cliente:" + hora.nombreMateria));
             
                 document.Add(new Paragraph(" "));
                 document.Add(new Paragraph(" DETALLE DE LA FACTURA "));
@@ -81,8 +81,8 @@ namespace SistemaDeNotas.Data.PDF
             }
 
             descargarPDF();
+            return Task.CompletedTask;
         }
-
 
         public FileResult descargarPDF()
         {
@@ -91,6 +91,6 @@ namespace SistemaDeNotas.Data.PDF
             return File(fileBytes, "wwwroot/FilePdf", "FacturaSystem.pdf");
         }
 
-
+    
     }
 }

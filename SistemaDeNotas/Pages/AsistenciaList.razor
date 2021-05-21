@@ -57,66 +57,6 @@
 </select>
 
 
- 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-
-            <th>Estudiante</th>
-            <th>Nota 1</th>
-            <th>Nota 2</th>
-            <th>Nota 3</th>
-            <th>Promedio de Notas</th>
-            <th></th>
-
-        </tr>
-    </thead>
-    <tbody>
-
-        @if (listaAsistencia != null)
-        {
-
-
-            @foreach (var asistencia in listaAsistencia)
-            {
-                <tr class="table-warning">
-                   
-                    <td>@asistencia.idEstudiante</td>
-                   
-
-
-
-
-                    <td>
-                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @ondblclick="()=> EditarNotas(nota.idMatricula)">
-                            <span class="oi oi-pencil" aria-hidden="true"></span>
-                        </button>
-                       
-
-
-
-
-
-
-                            <td>@nota.idNotas</td>
-                            <td>@nota.nota1</td>
-                            <td>@nota.nota2</td>
-                            <td>@nota.nota3</td>
-                            <td>@nota.promedioNotas</td>
-                            <td>@nota.idMateria</td>
-                            <td>@nota.idPeriodo</td>*@
-
-                    </td>
-                </tr>
-            }
-
-        }
-
-    </tbody>
-</table>
-
-
 
 @code {
 

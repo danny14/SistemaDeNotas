@@ -2,19 +2,108 @@
 @using SistemaDeNotas.Data
 @using SistemaDeNotas.Data.Model
 @using SistemaDeNotas.Data.Services
+@using SistemaDeNotas.Data.PDF
 
-@inject IHorarioService HorarioService
-@inject NavigationManager NavigationManager
+@inject IMatriculaService MatriculaService;
+@inject IEstudianteService EstudianteService;
+@inject IPeriodoService PeriodoService;
+@inject IMateriaService MateriaService;
+@inject IGradoService GradoService;
+@inject IHorarioPDF HorarioPDF;
+@inject NavigationManager NavigationManager;
 @using Microsoft.AspNetCore.Http
 
-<h1>Horario</h1>
+<h1>HORARIO</h1>
+<select class="form-select" aria-label="Default select example">
+    @if (listaPeriodo != null)
+    {
+        @foreach (var periodo in listaPeriodo)
+        {
+            <option value="@periodo.idPeriodo">@periodo.nombrePeriodo</option>
+        }
+    }
+</select>
+
+<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+    @if (listaGrado != null)
+    {
+        @foreach (var grado in listaGrado)
+        {
+            <option value="@grado.idGrado">@grado.nombreGrado</option>
+        }
+    }
+</select>
+<select class="form-select" aria-label="Default select example">
+    @if (listaMateria != null)
+    {
+        @foreach (var materia in listaMateria)
+        {
+            <option value="@materia.idMateria">@materia.nombreMateria</option>
+        }
+    }
+    else
+    {
+        <option value="0">Seleccione Grado</option>
+
+    }
+</select>
+<td>
+    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+</td>
+
+@code {
+
+
+    IEnumerable<matricula> notiviris;
+    IEnumerable<periodo> listaPeriodo;
+
+    IEnumerable<Materia> listaMateria;
+    IEnumerable<Grado> listaGrado;
+    IEnumerable<horario> horarios;
+    public Materia hora;
+
+    public int numFactura = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        notiviris = await MatriculaService.GetAllNotas();
+        listaPeriodo = await PeriodoService.GetAllPeriodo();
+
+        listaGrado = await GradoService.GetAllGrados();
+
+
+    }
 
 
 
-<SurveyPrompt Title="How is Blazor working for you?" />
-@code
-{
-    @*<td>
+
+    void EditarNotas(int id)
+    {
+        NavigationManager.NavigateTo("/NotasList " + id);
+    }
+
+
+
+    async Task ListarMateria(ChangeEventArgs args)
+    {
+        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
+    }
+
+    async Task GeneraPDF()
+    {
+        if (numFactura > 0)
+        {
+
+            await HorarioPDF.GeneraFactura(hora, horarios);
+        }
+    }
+
+
+}
+
+
+@*<td>
             <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
         </td>
 
@@ -29,5 +118,27 @@
                     detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
                     await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);
                 }
-            }*@
-}
+            }
+
+
+
+
+
+
+        <td>
+        <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+    </td>
+        async Task GeneraPDF()
+        {
+            if (numFactura > 0)
+            {
+
+                await HorarioServicePDF.GeneraFactura(hora, horarios);
+            }
+        }
+
+
+
+
+
+*@
