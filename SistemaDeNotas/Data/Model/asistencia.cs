@@ -20,6 +20,7 @@ namespace SistemaDeNotas.Data.Model
         public string nombresEstudiante { get; set; }
         public string apellidosEstudiante { get; set; }
 
+        public Estudiante alumno;
         public matricula matricula;
 
         public matricula GetMatricula()
@@ -30,6 +31,14 @@ namespace SistemaDeNotas.Data.Model
             matricula.NombresEstudiante = nombresEstudiante;
             matricula.ApellidosEstudiante = apellidosEstudiante;
             return matricula;
+        }
+        public Estudiante GetEstudiante()
+        {
+            alumno = new Estudiante();
+            alumno.idEstudiante = idEstudiante;
+            alumno.NombresEstudiante = nombresEstudiante;
+            alumno.ApellidosEstudiante = apellidosEstudiante;
+            return alumno;
         }
 
 

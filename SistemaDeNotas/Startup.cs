@@ -43,7 +43,9 @@ namespace SistemaDeNotas
             services.AddScoped<IListadoEstudianteProfesorService, ListadoEstudianteProfesorService>();
             services.AddScoped<IPeriodoService, PeriodoService>();
             services.AddScoped<IHorarioService, HorarioService>();
+            services.AddScoped<IHorarioPDF, HorarioPDF>();
             services.AddScoped<INotasPDF, NotasPDF>();
+            services.AddScoped<IAsistenciaService, AsistenciaService>();
 
 
 

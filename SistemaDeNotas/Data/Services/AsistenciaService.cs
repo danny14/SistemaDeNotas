@@ -44,7 +44,9 @@ namespace SistemaDeNotas.Data.Services
             IEnumerable<Asistencia> asistencias;
             using (var conn = new SqlConnection(_configuration.Value))
             {
-                const string query = "SELECT estudiante.idEstudiante, estudiante.nombresEstudiante, estudiante.apellidosEstudiante, matricula.nota1, matricula.nota2, matricula.nota3 FROM estudiante, matricula WHERE estudiante.idEstudiante = matricula.idMatricula";
+                const string query = @"SELECT estudiante.idEstudiante, estudiante.nombresEstudiante, estudiante.apellidosEstudiante, asistencia.asistenciaJUST, asistencia.descripcion
+FROM estudiante, asistencia
+WHERE estudiante.idEstudiante = asistencia.idMatricula";
                 asistencias = await conn.QueryAsync<Asistencia>(query, commandType: CommandType.Text);
             }
 

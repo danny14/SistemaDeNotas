@@ -1,7 +1,7 @@
 ﻿@page "/Horario"
 @using SistemaDeNotas.Data
 @using SistemaDeNotas.Data.Model
-
+@using SistemaDeNotas.Data.PDF
 @using SistemaDeNotas.Data.Services
 
 @inject IMatriculaService MatriculaService;
@@ -16,7 +16,7 @@
 @using Microsoft.AspNetCore.Http
 
 <h1>HORARIO</h1>
-<select class="form-select" aria-label="Default select example">
+<select class="form-select" aria-label="Default select example" @onchange="ListarGrado">
     @if (listaPeriodo != null)
     {
         @foreach (var periodo in listaPeriodo)
@@ -26,7 +26,7 @@
     }
 </select>
 
-<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+<select class="form-select" aria-label="Default select example">
     @if (listaGrado != null)
     {
         @foreach (var grado in listaGrado)
@@ -35,23 +35,57 @@
         }
     }
 </select>
-<select class="form-select" aria-label="Default select example">
-    @if (listaMateria != null)
-    {
-        @foreach (var materia in listaMateria)
-        {
-            <option value="@materia.idMateria">@materia.nombreMateria</option>
-        }
-    }
-    else
-    {
-        <option value="0">Seleccione Grado</option>
 
-    }
-</select>
 <td>
-    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Horario</button>
 </td>
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>dia</th>
+            <th>materia</th>
+            <th>inicio</th>
+            <th>final</th>
+      
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (horarios != null)
+        {
+
+
+            @foreach (var nota in horarios)
+
+            {
+        <tr class="table-warning">
+
+            <td>@nota.dia</td>
+            <td>@nota.nombreMateria</td>
+            <td>@nota.horaInicio</td>
+            <td>@nota.horaFinal</td>
+            
+
+
+
+
+
+        </tr>
+            }
+
+        }
+
+    </tbody>
+</table>
+
+
 
 @code {
 
@@ -62,9 +96,9 @@
     IEnumerable<Materia> listaMateria;
     IEnumerable<Grado> listaGrado;
     IEnumerable<horario> horarios;
-    public Materia hora;
-
-    public int numFactura = 0;
+    public Materia mate;
+    public horario hora;
+    public int pdf = 1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,6 +107,7 @@
         listaPeriodo = await PeriodoService.GetAllPeriodo();
 
         listaGrado = await GradoService.GetAllGrados();
+        horarios = await HorarioService.GetHorario(1);
 
 
     }
@@ -87,17 +122,17 @@
 
 
 
-    async Task ListarMateria(ChangeEventArgs args)
+    async Task ListarGrado(ChangeEventArgs args)
     {
-        listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
+        listaGrado = await GradoService.GetPeriodoGrado(Convert.ToInt32(args.Value));
     }
 
     async Task GeneraPDF()
     {
-        if (numFactura > 0)
+        if (pdf > 0)
         {
 
-            await HorarioPDF.GeneraFactura(hora, horarios);
+            await HorarioPDF.GeneraPdf(horarios);
         }
     }
 
@@ -106,19 +141,18 @@
 
 
 @*<td>
-            <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
-        </td>
+        <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Factura</button>
+    </td>
 
 
 
-                async Task GeneraPDF()
+            async Task GeneraPDF()
+        {
+            if (numFactura > 0)
             {
-                if (numFactura > 0)
-                {
-                    notiviris = await FacturaService.FacturaSelect(numFactura);
-                    cliente = await ClienteService.ClienteSelect(factura.ClienteFactura);
-                    detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
-                    await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);
-                }
-            }*@
-}
+                notiviris = await FacturaService.FacturaSelect(numFactura);
+                cliente = await ClienteService.ClienteSelect(factura.ClienteFactura);
+                detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
+                await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);
+            }
+        }*@

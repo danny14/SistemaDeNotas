@@ -108,5 +108,17 @@ namespace SistemaDeNotas.Data.Services
 
             return true;
         }
+        public async Task<IEnumerable<Grado>> GetPeriodoGrado(int id)
+        {
+            IEnumerable<Grado> grado;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = @"SELECT * FROM grado WHERE idPeriodo = @Id";
+                grado = await conn.QueryAsync<Grado>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
+            }
+
+            return grado;
+
+        }
     }
 }

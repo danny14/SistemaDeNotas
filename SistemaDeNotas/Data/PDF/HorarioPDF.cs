@@ -26,9 +26,9 @@ namespace SistemaDeNotas.Data.PDF
         {
             _env = env;
         }
-        public Task GeneraFactura(IEnumerable<horario> horarios)
+        public async Task GeneraPdf(IEnumerable<horario> horarios)
         {
-            string destination = "wwwroot/FilePdf/FacturaSystem.pdf";
+            string destination = "wwwroot/FilePdf/FileSystem.pdf";
             FileInfo file = new FileInfo(destination);
             file.Delete();
             var fileStream = file.Create();
@@ -39,41 +39,52 @@ namespace SistemaDeNotas.Data.PDF
             //Escribiendo en el Documento
             using (Document document = new Document(pdfdoc))
             {
-                document.Add(new Paragraph("FACTURA DE VENTA No:" + hora.idMateria));
-                document.Add(new Paragraph("Identificación del Cliente:" + hora.nombreMateria));
-            
+                document.Add(new Paragraph("Horario de clases" ));
+           
                 document.Add(new Paragraph(" "));
-                document.Add(new Paragraph(" DETALLE DE LA FACTURA "));
-                float[] columnWidths = new float[] { 70f, 200f, 70f, 70f };
+        
+                float[] columnWidths = new float[] { 70f, 70f, 70f, 70f, 70f, 70f };
                 Table table = new Table(columnWidths);
                 Cell cell = new Cell(1, 1)
-                   .SetBackgroundColor(ColorConstants.GRAY)
+                   .SetBackgroundColor(ColorConstants.CYAN)
                    .SetTextAlignment(TextAlignment.CENTER)
-                   .Add(new Paragraph("Código:"));
+                   .Add(new Paragraph("HORA"));
                 table.AddCell(cell);
                 cell = new Cell(1, 1)
-                   .SetBackgroundColor(ColorConstants.GRAY)
+                   .SetBackgroundColor(ColorConstants.CYAN)
                    .SetTextAlignment(TextAlignment.CENTER)
-                   .Add(new Paragraph("Nombre Producto:"));
+                   .Add(new Paragraph("LUNES"));
                 table.AddCell(cell);
                 cell = new Cell(1, 1)
-                   .SetBackgroundColor(ColorConstants.GRAY)
+                   .SetBackgroundColor(ColorConstants.CYAN)
                    .SetTextAlignment(TextAlignment.CENTER)
-                   .Add(new Paragraph("Valor:"));
+                   .Add(new Paragraph("MARTES"));
                 table.AddCell(cell);
                 cell = new Cell(1, 1)
-                   .SetBackgroundColor(ColorConstants.GRAY)
+                   .SetBackgroundColor(ColorConstants.CYAN)
                    .SetTextAlignment(TextAlignment.CENTER)
-                   .Add(new Paragraph("Cantidad:"));
+                   .Add(new Paragraph("MIERCOLES"));
+                table.AddCell(cell);
+                cell = new Cell(1, 1)
+                   .SetBackgroundColor(ColorConstants.CYAN)
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .Add(new Paragraph("JUEVES"));
+                table.AddCell(cell);
+                cell = new Cell(1, 1)
+                   .SetBackgroundColor(ColorConstants.CYAN)
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .Add(new Paragraph("VIERNES"));
                 table.AddCell(cell);
                 document.Add(table);
 
                 foreach (var horario in horarios)
                 {
                     table = new Table(columnWidths);
-                    table.AddCell(horario.idHorario.ToString());
                     table.AddCell(horario.dia);
-                   document.Add(table);
+                    table.AddCell(horario.nombreMateria);
+                    table.AddCell(horario.horaInicio.ToString());
+                    table.AddCell(horario.horaFinal.ToString());
+                    document.Add(table);
                 }
 
                 document.Close();
