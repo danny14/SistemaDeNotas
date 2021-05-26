@@ -16,6 +16,7 @@
 @using Microsoft.AspNetCore.Http
 
 <h1>HORARIO</h1>
+
 <select class="form-select" aria-label="Default select example" @onchange="ListarGrado">
     @if (listaPeriodo != null)
     {
@@ -90,7 +91,7 @@
 @code {
 
 
-    IEnumerable<matricula> notiviris;
+    IEnumerable<matricula> notas;
     IEnumerable<periodo> listaPeriodo;
 
     IEnumerable<Materia> listaMateria;
@@ -103,7 +104,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-        notiviris = await MatriculaService.GetAllNotas();
+        notas = await MatriculaService.GetAllNotas();
         listaPeriodo = await PeriodoService.GetAllPeriodo();
 
         listaGrado = await GradoService.GetAllGrados();
@@ -150,7 +151,7 @@
         {
             if (numFactura > 0)
             {
-                notiviris = await FacturaService.FacturaSelect(numFactura);
+                notas = await FacturaService.FacturaSelect(numFactura);
                 cliente = await ClienteService.ClienteSelect(factura.ClienteFactura);
                 detalleFactura = await FacturaProductoService.GetDetalleFactura(numFactura);
                 await FacturaServicePDF.GeneraFactura(factura, cliente, detalleFactura);

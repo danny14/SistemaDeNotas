@@ -14,96 +14,111 @@
 
 
 <h1>Notas</h1>
-<select class="form-select" aria-label="Default select example">
-    @if (listaPeriodo != null)
-    {
-        @foreach (var periodo in listaPeriodo)
-        {
-            <option value="@periodo.idPeriodo">@periodo.nombrePeriodo</option>
-        }
-    }
-</select>
-<select class="form-select" aria-label="Default select example">
-    @if (listaProfesor != null)
-    {
-        @foreach (var profesores in listaProfesor)
-        {
-            <option value="@profesores.idProfesor">@(profesores.nombreProfesor + " " + profesores.apellidoProfesor)</option>
-        }
-    }
-</select>
-<select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
-    @if (listaGrado != null)
-    {
-        @foreach (var grado in listaGrado)
-        {
-            <option value="@grado.idGrado">@grado.nombreGrado</option>
-        }
-    }
-</select>
-<select class="form-select" aria-label="Default select example">
-    @if (listaMateria != null)
-    {
-        @foreach (var materia in listaMateria)
-        {
-            <option value="@materia.idMateria">@materia.nombreMateria</option>
-        }
-
-
-    }
-    else
-    {
-        <option value="0">Seleccione Grado</option>
-
-    }
-</select>
-           <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-
-                    <th>Estudiante</th>
-                    <th>Nota 1</th>
-                    <th>Nota 2</th>
-                    <th>Nota 3</th>
-                    <th>Promedio de Notas</th>
-                    <th></th>
-
-                </tr>
-            </thead>
-            <tbody>
-
-                @if (notiviris != null)
+<form method="post">
+    <table class="table-primary" align="center">
+        <select class="form-select" aria-label="Default select example">
+            @if (listaPeriodo != null)
+            {
+                @foreach (var periodo in listaPeriodo)
                 {
-
-
-                    @foreach (var nota in notiviris)
-               
-                    {
-                        <tr class="table-warning">
-                            
-                            <td>@nota.idEstudiante</td>
-                            <td>@(nota.ApellidosEstudiante + " " + nota.NombresEstudiante)</td>
-                            <td><input type="text" value="@nota.nota1" size="6" disabled /></td>
-                            <td><input type="text" value="@nota.nota2" size="6" disabled /></td>
-                            <td><input type="text" value="@nota.nota3" size="6" disabled /></td>
-
-
-
-
-                            <td>
-                                <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @ondblclick="() => EditarNotas(nota.idMatricula)">
-                                    <span class="oi oi-pencil" aria-hidden="true"></span>
-                                </button>
-
-                            </td>
-                        </tr>
-                    }
-
+                    <option value="@periodo.idPeriodo" @onchange="() => AsignarPeriodo(periodo)">@periodo.nombrePeriodo</option>
+                }
+            }
+        </select>
+        <select class="form-select" aria-label="Default select example" @onchange="ListarGrado">
+            @if (listaProfesor != null)
+            {
+                @foreach (var profesores in listaProfesor)
+                {
+                    <option value="@profesores.idProfesor">@(profesores.nombreProfesor + " " + profesores.apellidoProfesor)</option>
+                } }
+            else
+            {
+                <option value="0">Seleccione Profesor</option>
+            }
+        </select>
+        <select class="form-select" aria-label="Default select example" @onchange="ListarMateria">
+            @if (listaGrado != null)
+            {
+                @foreach (var grado in listaGrado)
+                {
+                    <option value="@grado.idGrado">@grado.nombreGrado</option>
+                }
+            }
+        </select>
+        <select class="form-select" aria-label="Default select example">
+            @if (listaMateria != null)
+            {
+                @foreach (var materia in listaMateria)
+                {
+                    <option value="@materia.idMateria"@onchange="() => AsignarMateria(materia)">@materia.nombreMateria</option>
                 }
 
-            </tbody>
-        </table>
+
+            }
+            else
+            {
+                <option value="0">Seleccione Grado</option>
+
+            }
+        </select>
+    </table></form>
+<p></p>
+<table align="center">
+    <thead>
+        <tr class="table-warning">
+            <th colspan="8" class="text-center"><h3>Registro de notas</h3></th>
+        </tr>
+    <th>ID</th>
+
+    <th>Estudiante</th>
+    <th>Nota 1</th>
+    <th>Nota 2</th>
+    <th>Nota 3</th>
+    <th>Promedio de Notas</th>
+    <th></th>
+    </thead>
+
+      
+
+    <tbody>
+
+        @if (notas != null)
+        {
+
+
+            @foreach (var nota in notas)
+
+            {
+                <tr class="table-warning">
+
+                    <td>@nota.idEstudiante</td>
+                    <td>@(nota.ApellidosEstudiante + " " + nota.NombresEstudiante)</td>
+                    <td><input type="text" value="@nota.nota1" size="6"  /></td>
+                    <td><input type="text" value="@nota.nota2" size="6"  /></td>
+                    <td><input type="text" value="@nota.nota3" size="6"  /></td>
+
+
+
+
+                    <td>
+                        <button type="button" class="btn btn-default" aria-label="Left Align" title="Edit" @ondblclick="() => EditarNotas(nota.idMatricula, nota.idEstudiante, nota.nota1, nota.nota2, nota.nota3)">
+                            <span class="oi oi-pencil" aria-hidden="true"></span>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </tbody>
+
+</table>
+
+           
+                
+
 
 
 
@@ -112,16 +127,17 @@
 @code {
 
     protected bool IsDisabled { get; set; }
-    IEnumerable<matricula> notiviris;
+    IEnumerable<matricula> notas;
     IEnumerable<periodo> listaPeriodo;
     IEnumerable<Profesores> listaProfesor;
     IEnumerable<Materia> listaMateria;
     IEnumerable<Grado> listaGrado;
+    matricula matriculas = new matricula();
 
     protected override async Task OnInitializedAsync()
     {
 
-        notiviris = await MatriculaService.GetAllNotas();
+        notas = await MatriculaService.GetAllNotas();
         listaPeriodo = await PeriodoService.GetAllPeriodo();
         listaProfesor = await ProfesoresService.GetAllProfesor();
         listaGrado = await GradoService.GetAllGrados();
@@ -132,16 +148,35 @@
 
 
 
-    void EditarNotas(int id)
+    async Task EditarNotas(int idMatricula, int idEstudiante, float nota1, float nota2, float nota3)
     {
-        NavigationManager.NavigateTo("/NotasList " + id);
+
+        matriculas.idMatricula = idMatricula;
+        matriculas.idEstudiante = idEstudiante;
+        matriculas.nota1 = nota1;
+        matriculas.nota2 = nota2;
+        matriculas.nota3 = nota3;
+        
+        await MatriculaService.NotasUpdate(matriculas);
     }
 
 
 
+    async Task ListarGrado(ChangeEventArgs args)
+    {
+        listaGrado = await GradoService.GetGradoProfesor(Convert.ToInt32(args.Value));
+    }
     async Task ListarMateria(ChangeEventArgs args)
     {
         listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
+    }
+    void AsignarPeriodo(periodo periodos)
+    {
+        matriculas.idPeriodo = periodos.idPeriodo;
+    }
+    void AsignarMateria(Materia materias)
+    {
+        matriculas.idMateria = materias.idMateria;
     }
 
 

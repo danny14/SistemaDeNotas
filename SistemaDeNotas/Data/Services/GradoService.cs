@@ -120,5 +120,17 @@ namespace SistemaDeNotas.Data.Services
             return grado;
 
         }
+        public async Task<IEnumerable<Grado>> GetGradoProfesor(int id)
+        {
+            IEnumerable<Grado> grado;
+            using (var conn = new SqlConnection(_configuration.Value))
+            {
+                const string query = @"SELECT * FROM grado WHERE idProfesor = @Id";
+                grado = await conn.QueryAsync<Grado>(query.ToString(), new { Id = id }, commandType: CommandType.Text);
+            }
+
+            return grado;
+
+        }
     }
 }

@@ -2,6 +2,7 @@
 @using SistemaDeNotas.Data
 @using SistemaDeNotas.Data.Model;
 @using SistemaDeNotas.Data.Services;
+@using SistemaDeNotas.Data.PDF
 
 @inject IAsistenciaService AsistenciaService;
 @inject IEstudianteService EstudianteService;
@@ -9,6 +10,7 @@
 @inject IProfesoresService ProfesoresService;
 @inject IMateriaService MateriaService;
 @inject IGradoService GradoService;
+@inject IAsistenciaPDF AsistenciaPDF;
 @inject NavigationManager NavigationManager;
 @using Microsoft.AspNetCore.Http
 
@@ -57,6 +59,10 @@
 </select>
 
 
+<td>
+    <button class="btn btn-primary" @onclick="GeneraPDF">Imprimir Horario</button>
+</td>
+
 
 @code {
 
@@ -66,6 +72,8 @@
     IEnumerable<Profesores> listaProfesor;
     IEnumerable<Materia> listaMateria;
     IEnumerable<Grado> listaGrado;
+    public Estudiante alumno;
+    public int pdf = 1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -93,5 +101,12 @@
         listaMateria = await MateriaService.GetMateriaGrado(Convert.ToInt32(args.Value));
     }
 
+    async Task GeneraPDF()
+    {
+        if (pdf > 0)
+        {
 
+            await AsistenciaPDF.GeneraPdf(listaAsistencia);
+        }
+    }
 }

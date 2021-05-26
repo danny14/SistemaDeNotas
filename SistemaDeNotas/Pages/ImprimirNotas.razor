@@ -74,11 +74,11 @@
     </thead>
     <tbody>
 
-        @if (notiviris != null)
+        @if (notas != null)
         {
 
 
-            @foreach (var nota in notiviris)
+            @foreach (var nota in notas)
             // && estudiantes != null @foreach (var estudiante in estudiantes)
             {
                 <tr class="table-warning">
@@ -134,7 +134,7 @@
 @code {
 
 
-    IEnumerable<matricula> notiviris;
+    IEnumerable<matricula> notas;
     IEnumerable<periodo> listaPeriodo;
     IEnumerable<Profesores> listaProfesor;
     IEnumerable<Materia> listaMateria;
@@ -143,7 +143,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-        notiviris = await MatriculaService.GetAllNotas();
+        notas = await MatriculaService.GetAllNotas();
         listaPeriodo = await PeriodoService.GetAllPeriodo();
         listaProfesor = await ProfesoresService.GetAllProfesor();
         listaGrado = await GradoService.GetAllGrados();

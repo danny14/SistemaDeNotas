@@ -12,9 +12,9 @@ namespace SistemaDeNotas.Data.Model
         public DateTime fechaMatricula { get; set; }
         public int idPeriodo { get; set; }
         public int idMateria { get; set; }
-        public int nota1 { get; set; }
-        public int nota2 { get; set; }
-        public int nota3 { get; set; }
+        public float nota1 { get; set; }
+        public float nota2 { get; set; }
+        public float nota3 { get; set; }
         public string NombresEstudiante { get; set; }
 
         public string ApellidosEstudiante { get; set; }

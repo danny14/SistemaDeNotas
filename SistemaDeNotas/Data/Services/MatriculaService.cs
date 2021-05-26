@@ -170,7 +170,7 @@ public async Task<bool> NotasUpdate(matricula notas)
                     nota3 = @nota3
                      WHERE idMatricula = @idMatricula";
 
-            var result = await db.ExecuteAsync(sql.ToString(), new { });
+            var result = await db.ExecuteAsync(sql.ToString(), new { notas.nota1, notas.nota2, notas.nota3, notas.idMatricula});
             return result > 0;
 
             }

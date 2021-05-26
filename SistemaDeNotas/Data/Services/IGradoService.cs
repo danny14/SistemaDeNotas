@@ -12,5 +12,6 @@ namespace SistemaDeNotas.Data.Services
         Task<bool> GradoInsert(Grado grado);
         Task<bool> GradoUpdate(Grado grado);
         Task<IEnumerable<Grado>> GetPeriodoGrado(int id);
+        Task<IEnumerable<Grado>> GetGradoProfesor(int id);
     }
 }
